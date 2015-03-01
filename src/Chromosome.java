@@ -3,9 +3,10 @@ import java.util.Random;
 
 public class Chromosome {
     
+    public ObjectiveFunction obj;
+    
     public int lowerBound,
                 upperBound,
-                fitness,
                 probability,
                 numVars,
                 bitStringLength;
@@ -13,22 +14,21 @@ public class Chromosome {
     public int[] chromosome;
     public double[] bitStringValues;        
     
+    public double fitness;
+    
     public Chromosome(int lowerBound, int upperBound, int numVars) {
         
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         this.numVars = numVars;
-        generateBitString();
-        convertBitString();
     }
     
-    private void generateBitString() {
+    public void generateBitString(Random random) {
         
        bitStringLength = (int)(Math.ceil(Math.log(upperBound) / Math.log(2)));
        int chromLen = bitStringLength * numVars;
        chromosome = new int[chromLen];
        
-       Random random = new Random();
        for(int i = 0; i < chromLen; i++) {
            int randomNum = random.nextInt(10) + 1;
            if(randomNum <= 5) {
@@ -39,7 +39,7 @@ public class Chromosome {
        }
     }
        
-    private void convertBitString() {
+    public void convertBitString() {
         
         bitStringValues = new double[numVars];
         int val = 0, power = 0;
@@ -54,7 +54,23 @@ public class Chromosome {
             bitStringValues[i] = squeezedVal;
             power = 0;
             val = 0;
-            squeezedVal = 0;
+        }
+    }
+    
+    public void evaluateFitness(ObjectiveFunction obj) {
+        double x = bitStringValues[0];
+        double y = bitStringValues[1];
+        double z = bitStringValues[2];
+        fitness = obj.ObjectiveFunction(x, y, z);
+    }
+    
+    public void mutate(int mutRate, Random random) {
+        
+        for(int i = 0; i < chromosome.length; i++) {
+           int randomNum = random.nextInt(100) + 1;
+           if(randomNum <= mutRate) {
+               chromosome[i] = 1 - chromosome[i];
+           }
         }
     }
              
