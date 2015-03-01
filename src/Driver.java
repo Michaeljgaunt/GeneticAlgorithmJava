@@ -10,7 +10,7 @@ public class Driver {
     static int varNum = 2;
     static int lowerBound = 0;
     static int upperBound = 31;
-    
+    static int numCuts = 2;
     
     public static void main(String args[]) {
         
@@ -40,28 +40,7 @@ public class Driver {
         for(int i = 0; i < chromNum; i++) {     
             System.out.println(chromArray.get(i).fitness);
         }
-        
-        System.out.println("\nChromosomes after mutating with a rate of 10%: ");
-        for(int i = 0; i < chromNum; i++) {          
-            chromArray.get(i).mutate(10, random);
-            System.out.println(Arrays.toString(chromArray.get(i).chromosome));
-        }
-        
-        for (Chromosome chromosome : chromArray) {
-            chromosome.convertBitString();
-            chromosome.evaluateFitness(objfunc);
-        }
-        
-        System.out.println("\nValues after mutating: ");
-        for(int i = 0; i < chromNum; i++) {     
-            System.out.println(Arrays.toString(chromArray.get(i).bitStringValues));
-        }
-        
-        System.out.println("\nFitness values after mutating: ");
-        for(int i = 0; i < chromNum; i++) {     
-            System.out.println(chromArray.get(i).fitness);
-        }
-        
+                
         Evolve evolve = new Evolve(chromArray);
         evolve.getFitnessSum();
         evolve.evaluateProbabilities();
@@ -72,6 +51,10 @@ public class Driver {
         for(int i = 0; i < chromNum; i++) {       
             System.out.println(Arrays.toString(evolve.parentArray.get(i).chromosome));
         }
-        
+        System.out.println("\nChildren after crossover: ");
+        evolve.crossover(random, 1, lowerBound, upperBound, varNum);
+        for(int i = 0; i < chromNum; i++) {       
+            System.out.println(Arrays.toString(evolve.chromArray.get(i).chromosome));
+        }
     }
 }
