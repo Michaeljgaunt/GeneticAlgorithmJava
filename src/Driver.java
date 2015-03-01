@@ -1,29 +1,77 @@
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 
 public class Driver {
     
+    static int chromNum = 4;
+    static int varNum = 2;
+    static int lowerBound = 0;
+    static int upperBound = 31;
+    
+    
     public static void main(String args[]) {
         
-        Chromosome c1 = new Chromosome(0, 31, 3);
-        System.out.println("The function has " + c1.numVars +" variables in the range " + c1.lowerBound + " - " + c1.upperBound + ".");
-        
         Random random = new Random();
-        c1.generateBitString(random);
-        c1.convertBitString();
-        
-        System.out.println("Chromosome is " + Arrays.toString(c1.chromosome));
-        System.out.println("Values are " + Arrays.toString(c1.bitStringValues));
-        
         ObjectiveFunction objfunc = new ObjectiveFunction();
-        c1.evaluateFitness(objfunc);
+
+        ArrayList<Chromosome> chromArray = new ArrayList<Chromosome>(chromNum);
+        for(int i = 0; i < chromNum; i++) {
+            Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
+            c.generateBitString(random);
+            c.convertBitString();
+            c.evaluateFitness(objfunc);
+            chromArray.add(c);
+        }
         
-        System.out.println("Fitness is " + (c1.fitness));
+        System.out.println("\nChromosome array: ");
+        for(int i = 0; i < chromNum; i++) {     
+            System.out.println(Arrays.toString(chromArray.get(i).chromosome));
+        }
         
-        c1.mutate(50, random);
+        System.out.println("\nVariable values: ");
+        for(int i = 0; i < chromNum; i++) {     
+            System.out.println(Arrays.toString(chromArray.get(i).bitStringValues));
+        }
         
-        System.out.println("Mutating with rate 50% " + Arrays.toString(c1.chromosome));
+        System.out.println("\nFitness values: ");
+        for(int i = 0; i < chromNum; i++) {     
+            System.out.println(chromArray.get(i).fitness);
+        }
+        
+        System.out.println("\nChromosomes after mutating with a rate of 10%: ");
+        for(int i = 0; i < chromNum; i++) {          
+            chromArray.get(i).mutate(10, random);
+            System.out.println(Arrays.toString(chromArray.get(i).chromosome));
+        }
+        
+        for (Chromosome chromosome : chromArray) {
+            chromosome.convertBitString();
+            chromosome.evaluateFitness(objfunc);
+        }
+        
+        System.out.println("\nValues after mutating: ");
+        for(int i = 0; i < chromNum; i++) {     
+            System.out.println(Arrays.toString(chromArray.get(i).bitStringValues));
+        }
+        
+        System.out.println("\nFitness values after mutating: ");
+        for(int i = 0; i < chromNum; i++) {     
+            System.out.println(chromArray.get(i).fitness);
+        }
+        
+        Evolve evolve = new Evolve(chromArray);
+        evolve.getFitnessSum();
+        evolve.evaluateProbabilities();
+        System.out.println("\nFitness sum is: " + evolve.sum);
+        System.out.println("\nProbabilities are : " + evolve.probArray);
+        evolve.roulette_rank(random);
+        System.out.println("\nParents based on roulette ranking: ");
+        for(int i = 0; i < chromNum; i++) {       
+            System.out.println(Arrays.toString(evolve.parentArray.get(i).chromosome));
+        }
+        
     }
 }
