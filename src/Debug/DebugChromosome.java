@@ -1,9 +1,11 @@
+package Debug;
 
+import GA.ObjectiveFunction;
 import java.util.Random;
 
-public class Chromosome {
+public class DebugChromosome {
     
-    public ObjectiveFunction obj;
+    private ObjectiveFunction obj;
     
     public int lowerBound,
                 upperBound,
@@ -16,7 +18,7 @@ public class Chromosome {
     
     public double fitness;
     
-    public Chromosome(int lowerBound, int upperBound, int numVars) {
+    public DebugChromosome(int lowerBound, int upperBound, int numVars) {
         
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
@@ -58,11 +60,7 @@ public class Chromosome {
     }
     
     public void evaluateFitness(ObjectiveFunction obj) {
-        double x = bitStringValues[0];
-        double y = bitStringValues[1];
-        double z = bitStringValues[2];
-        double s = bitStringValues[3];
-        fitness = obj.ObjectiveFunction(x, y, z, s);
+        fitness = obj.ObjectiveFunction(bitStringValues);
     }
     
     public void mutate(int mutRate, Random random) {
@@ -70,10 +68,10 @@ public class Chromosome {
         for(int i = 0; i < chromosome.length; i++) {
            int randomNum = random.nextInt(100) + 1;
            if(randomNum <= mutRate) {
+               System.out.println("Bit number " + (i + 1) + " has mutated from " + chromosome[i] + " to " + (1 - chromosome[i]) + ".");
                chromosome[i] = 1 - chromosome[i];
            }
         }
     }
              
 }
-

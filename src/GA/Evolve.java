@@ -1,3 +1,4 @@
+package GA;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -5,7 +6,7 @@ import java.util.Random;
 
 public class Evolve {
     
-    ArrayList<Chromosome> chromArray;
+    public ArrayList<Chromosome> chromArray;
     double sum = 0;
     ArrayList<Double> probArray;
     ArrayList<Chromosome> parentArray;
@@ -32,7 +33,7 @@ public class Evolve {
         }
     }
     
-    public void roulette_rank(Random random) {
+    public void rouletteRank(Random random) {
         float randomNum = random.nextFloat();
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
