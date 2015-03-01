@@ -15,6 +15,10 @@ public class DebugDriver {
     static int upperBound = 31;
     static int numCuts = 1;
     static int mutRate = 50;
+    static int tourneySize = 3;
+    
+    static boolean rouletteFlag = true;
+    static boolean tournamentFlag = false;
     
     
     public static void debug() {
@@ -57,8 +61,17 @@ public class DebugDriver {
             evolve.evaluateProbabilities();
             System.out.println("\nProbabilities are: " + evolve.probArray);
             System.out.println("\n--------------------------------------------------------------");
-            System.out.println("\nRanking parents:");
-            evolve.rouletteRank(random);
+            if(rouletteFlag) {
+                System.out.println("\nRanking parents (roulette method):");
+                evolve.rouletteRank(random);
+            } else if(tournamentFlag) {
+                System.out.println("\nRanking parents (tournament method, size " + tourneySize + "):");
+                evolve.tournamentRank(random, tourneySize);
+            }
+            System.out.println("\nChosen parents: ");
+            for(int i = 0; i < evolve.parentArray.size(); i++) {
+                System.out.println(Arrays.toString(evolve.parentArray.get(i).chromosome));
+            }
             System.out.println("\n--------------------------------------------------------------");
 
             System.out.println("\nPerforming crossover:");

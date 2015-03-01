@@ -7,15 +7,18 @@ import java.util.Random;
 
 public class Driver {
     
-    public static int numIts = 3;
-    public static int chromNum = 4;
+    public static int numIts = 100;
+    public static int chromNum = 10;
     public static int varNum = 2;
     public static int lowerBound = 0;
-    public  static int upperBound = 31;
+    public static int upperBound = 10000000;
     public static int numCuts = 1;
     public static int mutRate = 5;
-    static boolean debugFlag = true;
+    public static int tourneySize = 4;
     
+    static boolean debugFlag = false;
+    static boolean rouletteFlag = false;
+    static boolean tournamentFlag = true;
     
     public static void main(String args[]) {
         
@@ -44,8 +47,14 @@ public class Driver {
                 Evolve evolve = new Evolve(chromArray);
                 evolve.getFitnessSum();
                 evolve.evaluateProbabilities();
-                evolve.rouletteRank(random);
-                System.out.println("\nRanking parents...");
+                if(rouletteFlag) {
+                    System.out.println("\nRanking parents (roulette method)...");
+                    evolve.rouletteRank(random);
+                } else if(tournamentFlag) {
+                    System.out.println("\nRanking parents (tournament method, size " + tourneySize + ")...");
+                    evolve.tournamentRank(random, tourneySize);
+                }
+                
 
                 System.out.println("Performing crossover...");
                 evolve.crossover(random, 1, lowerBound, upperBound, varNum);

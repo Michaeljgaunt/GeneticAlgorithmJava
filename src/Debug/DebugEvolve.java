@@ -67,6 +67,41 @@ public class DebugEvolve {
         }
     }
     
+    public void tournamentRank(Random random, int tourneySize) {
+        parentArray = new ArrayList<>(chromArray.size());
+        for(int i = 0; i < chromArray.size(); i++) {
+            ArrayList<DebugChromosome> tournamentArray =  new ArrayList<>(tourneySize);
+            System.out.println("\nChoosing chromosome " + (i + 1) + ": ");
+            for(int j = 0; j < tourneySize; j++) {
+                int randomNum = random.nextInt(chromArray.size());
+                System.out.println("Random number is " + randomNum);
+                System.out.println("Adding chromosome to tournament: " + Arrays.toString(chromArray.get(randomNum).chromosome));
+                tournamentArray.add(chromArray.get(randomNum));
+            }
+            System.out.println("\nComplete tournament is: ");
+            for(int j = 0; j < tourneySize; j++) {
+                System.out.println(Arrays.toString(tournamentArray.get(j).chromosome));
+            }
+            double bestFit = 0;
+            System.out.println("\nFitnesses of tournament participants: ");
+            for(int j = 0; j < tournamentArray.size(); j++) {
+                if(tournamentArray.get(j).fitness > bestFit)  {
+                    bestFit = tournamentArray.get(j).fitness;
+                }  
+                System.out.println(tournamentArray.get(j).fitness);
+            }
+            int bestIndex = 0;
+            for(int j = 0; j < tournamentArray.size(); j++) {
+                if(tournamentArray.get(j).fitness == bestFit){
+                    bestIndex = j;
+                    System.out.println("\nTournament winner is chromosome at index " + bestIndex + ": ");
+                }
+            }
+            System.out.println(Arrays.toString(tournamentArray.get(bestIndex).chromosome));
+            parentArray.add(tournamentArray.get(bestIndex));
+        }     
+    }
+    
     public void crossover(Random random, int numCuts, int lowerBound, int upperBound, int varNum) {
         chromLen = parentArray.get(0).chromosome.length;
         childArray = new ArrayList<>(parentArray.size());
@@ -109,9 +144,11 @@ public class DebugEvolve {
                 
                 childArray.get((2 * i) - 2).chromosome = childA;
                 childArray.get((2 * i) - 1).chromosome = childB;  
-                System.out.println("\nChild A: " + Arrays.toString(childA));
-                System.out.println("Child B: " + Arrays.toString(childB));;
             }
+        }
+        System.out.println("\nChild chromosomes: ");
+        for(int i = 0; i < childArray.size(); i++) {
+            System.out.println(Arrays.toString(childArray.get(i).chromosome));
         }
         chromArray = childArray;
     }

@@ -61,6 +61,32 @@ public class Evolve {
         }
     }
     
+    public void tournamentRank(Random random, int tourneySize) {
+        parentArray = new ArrayList<>(chromArray.size());
+        for(int i = 0; i < chromArray.size(); i++) {
+            ArrayList<Chromosome> tournamentArray =  new ArrayList<>(tourneySize);
+            for(int j = 0; j < tourneySize; j++) {
+                int randomNum = random.nextInt(chromArray.size());
+                tournamentArray.add(chromArray.get(randomNum));
+            }
+            for(int j = 0; j < tourneySize; j++) {
+            }
+            double bestFit = 0;
+            for(int j = 0; j < tournamentArray.size(); j++) {
+                if(tournamentArray.get(j).fitness > bestFit)  {
+                    bestFit = tournamentArray.get(j).fitness;
+                }  
+            }
+            int bestIndex = 0;
+            for(int j = 0; j < tournamentArray.size(); j++) {
+                if(tournamentArray.get(j).fitness == bestFit){
+                    bestIndex = j;
+                }
+            }
+            parentArray.add(tournamentArray.get(bestIndex));
+        }     
+    }
+    
     public void crossover(Random random, int numCuts, int lowerBound, int upperBound, int varNum) {
         chromLen = parentArray.get(0).chromosome.length;
         childArray = new ArrayList<>(parentArray.size());
