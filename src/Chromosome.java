@@ -60,7 +60,9 @@ public class Chromosome {
     public void evaluateFitness(ObjectiveFunction obj) {
         double x = bitStringValues[0];
         double y = bitStringValues[1];
-        fitness = obj.ObjectiveFunction(x, y);
+        double z = bitStringValues[2];
+        double s = bitStringValues[3];
+        fitness = obj.ObjectiveFunction(x, y, z, s);
     }
     
     public void mutate(int mutRate, Random random) {
