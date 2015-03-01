@@ -1,5 +1,6 @@
 package GA;
 
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class Chromosome {
@@ -71,6 +72,13 @@ public class Chromosome {
            }
         }
     }
+    
+    public static double round(double unrounded, int precision, int roundingMode)
+{
+    BigDecimal bd = new BigDecimal(unrounded);
+    BigDecimal rounded = bd.setScale(precision, roundingMode);
+    return rounded.doubleValue();
+}
              
 }
 
