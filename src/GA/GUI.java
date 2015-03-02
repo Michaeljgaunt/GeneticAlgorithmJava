@@ -56,7 +56,13 @@ public class GUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         tourneySizeSp = new javax.swing.JSpinner();
         jPanel4 = new javax.swing.JPanel();
-        mutRateBut = new javax.swing.JSlider();
+        prMutRateBut = new javax.swing.JSlider();
+        dynamicMutBut = new javax.swing.JCheckBox();
+        jLabel9 = new javax.swing.JLabel();
+        fitnessThreshold = new javax.swing.JSpinner();
+        jLabel10 = new javax.swing.JLabel();
+        seMutRateBut = new javax.swing.JSlider();
+        jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         outputWindow = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
@@ -201,12 +207,32 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Mutation Rate (%)  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        mutRateBut.setMajorTickSpacing(5);
-        mutRateBut.setMinorTickSpacing(1);
-        mutRateBut.setPaintLabels(true);
-        mutRateBut.setPaintTicks(true);
-        mutRateBut.setSnapToTicks(true);
-        mutRateBut.setValue(5);
+        prMutRateBut.setMajorTickSpacing(5);
+        prMutRateBut.setMinorTickSpacing(1);
+        prMutRateBut.setPaintLabels(true);
+        prMutRateBut.setPaintTicks(true);
+        prMutRateBut.setSnapToTicks(true);
+        prMutRateBut.setValue(5);
+
+        dynamicMutBut.setText("Dynamically Lower to Secondary Rate if threshold is reached.");
+        dynamicMutBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dynamicMutButActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Fitness Threshold");
+
+        jLabel10.setText("Primary Rate");
+
+        seMutRateBut.setMajorTickSpacing(5);
+        seMutRateBut.setMinorTickSpacing(1);
+        seMutRateBut.setPaintLabels(true);
+        seMutRateBut.setPaintTicks(true);
+        seMutRateBut.setSnapToTicks(true);
+        seMutRateBut.setValue(5);
+
+        jLabel11.setText("Seciondary Rate");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -214,12 +240,45 @@ public class GUI extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mutRateBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fitnessThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(dynamicMutBut)
+                        .addGap(0, 112, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(seMutRateBut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(prMutRateBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mutRateBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(prMutRateBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel10)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(seMutRateBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel11)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(fitnessThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dynamicMutBut))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         outputWindow.setColumns(20);
@@ -269,7 +328,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(runButton, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                         .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -306,16 +365,17 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -329,7 +389,8 @@ public class GUI extends javax.swing.JFrame {
         lowerBound = (Integer)lowerBoundSp.getValue();
         upperBound = (Integer)upperBoundSp.getValue();
         numCuts = (Integer)numCutsSp.getValue();
-        mutRate = (Integer)mutRateBut.getValue();
+        mutRate = (Integer)prMutRateBut.getValue();
+        boolean mutChanged = false;
         tourneySize = (Integer)tourneySizeSp.getValue();
         if(rouletteRankBut.isSelected()) {
             rouletteFlag = true;
@@ -354,6 +415,9 @@ public class GUI extends javax.swing.JFrame {
             System.out.println("Generating " + chromNum + " chromosomes with " + varNum + " variables in the range " + lowerBound + " - " + upperBound + ".");
             System.out.println("During crossover, " + numCuts + " cut(s) will be made.");
             System.out.println("A mutation rate of " + mutRate + "% will be applied.");
+            if(dynamicMutBut.isSelected()) {
+                System.out.println("The mutation rate will be lowered to " + seMutRateBut.getValue() + "% if a chromosome reaches the threshold fitness of " + fitnessThreshold.getValue() + ".");
+            }
             System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             System.out.println("\nGenerating chromosomes:");
@@ -437,6 +501,11 @@ public class GUI extends javax.swing.JFrame {
                 for (int i = 0; i < chromArray.size(); i++) {
                     if(chromArray.get(i).fitness == bestFit){
                         bestIndex = i;
+                        if((bestFit >= (Integer)fitnessThreshold.getValue()) && (dynamicMutBut.isSelected()) && (mutChanged == false)) {
+                            System.out.println("A chromosome has exceeded the fitness threshold, lowering mutation rate to " + (Integer)seMutRateBut.getValue() + "%.");
+                            mutRate = (Integer)seMutRateBut.getValue();
+                            mutChanged = true;
+                        }
                     }
                 }
 
@@ -510,6 +579,11 @@ public class GUI extends javax.swing.JFrame {
                 for (int i = 0; i < chromArray.size(); i++) {
                     if(chromArray.get(i).fitness == bestFit){
                         bestIndex = i;
+                        if((bestFit >= (Integer)fitnessThreshold.getValue()) && (dynamicMutBut.isSelected()) && (mutChanged == false)) {
+                            System.out.println("A chromosome has exceeded the fitness threshold, lowering mutation rate to " + (Integer)seMutRateBut.getValue() + "%.");
+                            mutRate = (Integer)seMutRateBut.getValue();
+                            mutChanged = true;
+                        }
                     }
                 }
 
@@ -527,10 +601,18 @@ public class GUI extends javax.swing.JFrame {
         outputWindow.setText("");
     }//GEN-LAST:event_clearButtonActionPerformed
 
+    private void dynamicMutButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dynamicMutButActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dynamicMutButActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
     private javax.swing.JCheckBox debugModeBut;
+    private javax.swing.JCheckBox dynamicMutBut;
+    private javax.swing.JSpinner fitnessThreshold;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -538,21 +620,23 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner lowerBoundSp;
-    private javax.swing.JSlider mutRateBut;
     private javax.swing.JSpinner numChromsSp;
     private javax.swing.JSpinner numCutsSp;
     private javax.swing.JSpinner numItsSp;
     private javax.swing.JSpinner numVarsSp;
     private javax.swing.JTextArea outputWindow;
+    private javax.swing.JSlider prMutRateBut;
     private javax.swing.ButtonGroup rankButs;
     private javax.swing.JRadioButton rouletteRankBut;
     private javax.swing.JButton runButton;
+    private javax.swing.JSlider seMutRateBut;
     private javax.swing.JRadioButton tournamentRankBut;
     private javax.swing.JSpinner tourneySizeSp;
     private javax.swing.JSpinner upperBoundSp;
