@@ -7,11 +7,11 @@ import java.util.Random;
 public class DebugEvolve {
     
     public ArrayList<DebugChromosome> chromArray;
-    double sum = 0;
-    ArrayList<Double> probArray;
-    ArrayList<DebugChromosome> parentArray;
-    int chromLen = 0;
-    ArrayList<DebugChromosome> childArray;
+    public double sum = 0;
+    public ArrayList<Double> probArray;
+    public ArrayList<DebugChromosome> parentArray;
+    public int chromLen = 0;
+    public ArrayList<DebugChromosome> childArray;
     
     public DebugEvolve(ArrayList<DebugChromosome> chromosomeArray) {
         chromArray = chromosomeArray;
@@ -26,10 +26,12 @@ public class DebugEvolve {
     public void evaluateProbabilities() {
         int probArraySize = chromArray.size();
         probArray = new ArrayList<>(probArraySize);
+        double probability = 0;
         for(int i = 0; i < probArraySize; i++) {
             double x = chromArray.get(i).fitness;
-            double probability = x / sum;
+            probability = x / sum;
             probArray.add(probability);
+            probability = 0;
         }
     }
     

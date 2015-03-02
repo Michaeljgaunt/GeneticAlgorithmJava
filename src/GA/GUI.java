@@ -1,12 +1,13 @@
 package GA;
 
-import Debug.DebugDriver;
+import Debug.DebugChromosome;
+import Debug.DebugEvolve;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class NewJFrame extends javax.swing.JFrame {
+public class GUI extends javax.swing.JFrame {
 
     public int numIts;
     public int chromNum;
@@ -21,7 +22,7 @@ public class NewJFrame extends javax.swing.JFrame {
     static boolean rouletteFlag;
     static boolean tournamentFlag;
     
-    public NewJFrame() {
+    public GUI() {
         initComponents();
          PrintStream printStream = new PrintStream(new CustomOutputStream(outputWindow));
          System.setOut(printStream);
@@ -51,17 +52,21 @@ public class NewJFrame extends javax.swing.JFrame {
         rouletteRankBut = new javax.swing.JRadioButton();
         tournamentRankBut = new javax.swing.JRadioButton();
         debugModeBut = new javax.swing.JCheckBox();
-        jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        tourneySizeSp = new javax.swing.JSpinner();
+        jPanel4 = new javax.swing.JPanel();
         mutRateBut = new javax.swing.JSlider();
         jScrollPane1 = new javax.swing.JScrollPane();
         outputWindow = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         runButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Genetic Algorithm");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Variable Controls  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Variable Options  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
         jLabel1.setText("Lower Bound");
 
@@ -74,6 +79,18 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel5.setText("Number of Cuts");
 
         jLabel7.setText("Number of Variables");
+
+        numChromsSp.setValue(4);
+
+        lowerBoundSp.setValue(2);
+
+        numCutsSp.setValue(1);
+
+        numVarsSp.setValue(2);
+
+        numItsSp.setValue(5);
+
+        upperBoundSp.setValue(31);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -130,7 +147,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Mode Controls  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Mode Options  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         rankButs.add(rouletteRankBut);
         rouletteRankBut.setText("Roulette Ranking");
@@ -146,6 +163,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
         debugModeBut.setText("Debug Mode");
 
+        jLabel6.setText("Tournament Size");
+
+        tourneySizeSp.setValue(3);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -153,25 +174,38 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(debugModeBut)
                     .addComponent(rouletteRankBut)
                     .addComponent(tournamentRankBut)
-                    .addComponent(debugModeBut))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(tourneySizeSp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(rouletteRankBut)
+                .addComponent(rouletteRankBut, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tournamentRankBut)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tourneySizeSp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(debugModeBut)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Mutation Controls", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Mutation Rate (%)  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jLabel6.setText("Mutation Rate");
+        mutRateBut.setMajorTickSpacing(5);
+        mutRateBut.setMinorTickSpacing(1);
+        mutRateBut.setPaintLabels(true);
+        mutRateBut.setPaintTicks(true);
+        mutRateBut.setSnapToTicks(true);
+        mutRateBut.setValue(5);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -179,23 +213,34 @@ public class NewJFrame extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mutRateBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(mutRateBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mutRateBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(mutRateBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         outputWindow.setColumns(20);
         outputWindow.setRows(5);
+        outputWindow.setText("\nThis program uses a genetic algorithm to maximise an objective function."
+            + "\nUse the above controls to fine tune how you want the algorithm to perform."
+            + "\n"
+            + "\nSet the lower bound and upper bound to define the range in which you want the generated variables to be within."
+            + "\nThe higher your upper bound, the more chromosomes you should set to ensure a good variety of values."
+            + "\nAs the range increases, the number of iterations should also be increased."
+            + "\nAs the upper bound increases, the number of cuts should be reasonably raised."
+            + "\n"
+            + "\nRoulette ranking ranks the chromosomes based on weighted probabilites."
+            + "\nTournament ranking ranks chromosomes based on the 'best' in a tournament setting."
+            + "\nTo have no ranking in effect, select tournament ranking with a size of 1. This will"
+            + "\npick chromosomes at random."
+            + "\n"
+            + "\nA high mutation rate means a greater range of values will be 'explored'."
+            + "\nA low mutation rate means a smaller range of values will be 'explored',"
+            + "\nbut the range of values that is explored will be more thoroughly 'exploited'"
+            + "\n"
+            + "\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
         jScrollPane1.setViewportView(outputWindow);
 
         jLabel8.setText("Output: ");
@@ -207,6 +252,13 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -215,35 +267,38 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(runButton, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(runButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(runButton)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(runButton)
+                    .addComponent(clearButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,7 +329,7 @@ public class NewJFrame extends javax.swing.JFrame {
         upperBound = (Integer)upperBoundSp.getValue();
         numCuts = (Integer)numCutsSp.getValue();
         mutRate = (Integer)mutRateBut.getValue();
-        tourneySize = 3;
+        tourneySize = (Integer)tourneySizeSp.getValue();
         if(rouletteRankBut.isSelected()) {
             rouletteFlag = true;
             tournamentFlag = false;
@@ -282,9 +337,114 @@ public class NewJFrame extends javax.swing.JFrame {
             tournamentFlag = true;
             rouletteFlag = false;
         }
+        if(debugModeBut.isSelected()) {
+            debugFlag = true;
+        } else {
+            debugFlag = false;
+        }
 
         if(debugFlag) {
-            DebugDriver.debug();
+                   
+            Random random = new Random();
+            ObjectiveFunction objfunc = new ObjectiveFunction();
+
+            System.out.println("Debug mode activated.");            
+            System.out.println("Iterating " + numIts + " times.");
+            System.out.println("Generating " + chromNum + " chromosomes with " + varNum + " variables in the range " + lowerBound + " - " + upperBound + ".");
+            System.out.println("During crossover, " + numCuts + " cut(s) will be made.");
+            System.out.println("A mutation rate of " + mutRate + "% will be applied.");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            System.out.println("\nGenerating chromosomes:");
+            ArrayList<DebugChromosome> chromArray = new ArrayList<>(chromNum);
+            for(int i = 0; i < chromNum; i++) {
+                System.out.println("\nChromosome " + (i + 1) + ": ");
+                DebugChromosome c = new DebugChromosome(lowerBound, upperBound, varNum);
+                c.generateBitString(random);
+                System.out.println(Arrays.toString(c.chromosome));
+                c.convertBitString();
+                System.out.println("Values: " + Arrays.toString(c.bitStringValues));
+                c.evaluateFitness(objfunc);
+                System.out.println("Fitness: " + c.fitness);
+                chromArray.add(c);
+            }
+            System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            for(int iteration = 0; iteration < numIts; iteration++) {
+
+                System.out.println("\nIteration " + (iteration + 1) + ":");
+                for(int i = 0; i < chromArray.size(); i++) {
+                    System.out.println(Arrays.toString(chromArray.get(i).chromosome));
+                }    
+
+                DebugEvolve evolve = new DebugEvolve(chromArray);
+                evolve.getFitnessSum();
+                System.out.println("\nSigma fitness is " + evolve.sum);
+                evolve.evaluateProbabilities();
+                System.out.println("\nProbabilities are: " + evolve.probArray);
+                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                if(rouletteFlag) {
+                    System.out.println("\nRanking parents (roulette method):");
+                    evolve.rouletteRank(random);
+                } else if(tournamentFlag) {
+                    System.out.println("\nRanking parents (tournament method, size " + tourneySize + "):");
+                    evolve.tournamentRank(random, tourneySize);
+                }
+                System.out.println("\nChosen parents: ");
+                for(int i = 0; i < evolve.parentArray.size(); i++) {
+                    System.out.println(Arrays.toString(evolve.parentArray.get(i).chromosome));
+                }
+                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                System.out.println("\nPerforming crossover:");
+                evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
+                for(int i = 0; i < chromNum; i++) {       
+                    chromArray = evolve.chromArray;
+                }
+                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                if(mutRate == 0) {
+                    System.out.println("\nMutation rate is 0%, no mutation will be applied.");
+                } else {
+                    System.out.println("\nApplying mutation rate of " + mutRate + "%...");
+                    for(int i = 0; i < chromNum; i++) {
+                        System.out.println("\nChromosome " + (i + 1) + ": ");
+                        chromArray.get(i).mutate(mutRate, random);
+                    }
+                }
+                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                double bestFit = 0;
+
+                System.out.println("\nEvaluating chromosomes...");
+                for(int i = 0; i < chromNum; i++) {
+                    System.out.println("\nChromosome " + (i + 1) + ": ");
+                    chromArray.get(i).convertBitString();
+                    System.out.println("Values: " + Arrays.toString(chromArray.get(i).bitStringValues));
+                    chromArray.get(i).evaluateFitness(objfunc);
+                    System.out.println("Fitness: " + chromArray.get(i).fitness);
+                }
+                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                for (DebugChromosome chrom : chromArray) {
+                    if (chrom.fitness > bestFit) {
+                        bestFit = chrom.fitness;
+                    }
+                } 
+
+                int bestIndex = 0;
+                for (int i = 0; i < chromArray.size(); i++) {
+                    if(chromArray.get(i).fitness == bestFit){
+                        bestIndex = i;
+                    }
+                }
+
+                DebugChromosome bestChrom = chromArray.get(bestIndex);
+                System.out.println("\nOn iteration " + (iteration + 1) + ", the best values for the variables found are: " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+            
         } else {
 
             Random random = new Random();
@@ -317,7 +477,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
 
                 System.out.println("Performing crossover...");
-                evolve.crossover(random, 1, lowerBound, upperBound, varNum);
+                evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
                 for(int i = 0; i < chromNum; i++) {
                     chromArray = evolve.chromArray;
                 }
@@ -362,7 +522,12 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rouletteRankButActionPerformed
 
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        outputWindow.setText("");
+    }//GEN-LAST:event_clearButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton clearButton;
     private javax.swing.JCheckBox debugModeBut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -388,6 +553,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton rouletteRankBut;
     private javax.swing.JButton runButton;
     private javax.swing.JRadioButton tournamentRankBut;
+    private javax.swing.JSpinner tourneySizeSp;
     private javax.swing.JSpinner upperBoundSp;
     // End of variables declaration//GEN-END:variables
 }
