@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import javax.swing.ImageIcon;
 
 public class GUI extends javax.swing.JFrame {
 
@@ -24,10 +25,10 @@ public class GUI extends javax.swing.JFrame {
     
     public GUI() {
         initComponents();
-         PrintStream printStream = new PrintStream(new CustomOutputStream(outputWindow));
-         System.setOut(printStream);
-         System.setErr(printStream);
-          
+        PrintStream printStream = new PrintStream(new CustomOutputStream(outputWindow));
+        System.setOut(printStream);
+        System.setErr(printStream);
+        this.setIconImage(new ImageIcon(getClass().getResource("/res/dna_helix.png")).getImage());  
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
