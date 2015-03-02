@@ -52,7 +52,7 @@ public class GUI extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         rouletteRankBut = new javax.swing.JRadioButton();
         tournamentRankBut = new javax.swing.JRadioButton();
-        debugModeBut = new javax.swing.JCheckBox();
+        frModeBut = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
         tourneySizeSp = new javax.swing.JSpinner();
         jPanel4 = new javax.swing.JPanel();
@@ -168,7 +168,7 @@ public class GUI extends javax.swing.JFrame {
         rankButs.add(tournamentRankBut);
         tournamentRankBut.setText("Tournament Ranking");
 
-        debugModeBut.setText("Debug Mode");
+        frModeBut.setText("Full Results Output");
 
         jLabel6.setText("Tournament Size");
 
@@ -181,7 +181,7 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(debugModeBut)
+                    .addComponent(frModeBut)
                     .addComponent(rouletteRankBut)
                     .addComponent(tournamentRankBut)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -201,7 +201,7 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(tourneySizeSp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(debugModeBut)
+                .addComponent(frModeBut)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -373,9 +373,8 @@ public class GUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -399,7 +398,7 @@ public class GUI extends javax.swing.JFrame {
             tournamentFlag = true;
             rouletteFlag = false;
         }
-        if(debugModeBut.isSelected()) {
+        if(frModeBut.isSelected()) {
             debugFlag = true;
         } else {
             debugFlag = false;
@@ -410,7 +409,7 @@ public class GUI extends javax.swing.JFrame {
             Random random = new Random();
             ObjectiveFunction objfunc = new ObjectiveFunction();
 
-            System.out.println("Debug mode activated.");            
+            System.out.println("Full results mode.");            
             System.out.println("Iterating " + numIts + " times.");
             System.out.println("Generating " + chromNum + " chromosomes with " + varNum + " variables in the range " + lowerBound + " - " + upperBound + ".");
             System.out.println("During crossover, " + numCuts + " cut(s) will be made.");
@@ -516,7 +515,7 @@ public class GUI extends javax.swing.JFrame {
             }
             
         } else {
-
+            System.out.println("Concise results mode.");
             Random random = new Random();
             ObjectiveFunction objfunc = new ObjectiveFunction();
 
@@ -607,9 +606,9 @@ public class GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
-    private javax.swing.JCheckBox debugModeBut;
     private javax.swing.JCheckBox dynamicMutBut;
     private javax.swing.JSpinner fitnessThreshold;
+    private javax.swing.JCheckBox frModeBut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
