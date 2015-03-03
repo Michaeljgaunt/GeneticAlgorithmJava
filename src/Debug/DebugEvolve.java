@@ -21,15 +21,27 @@ public class DebugEvolve {
         for (DebugChromosome chromosome : chromArray) {
             sum += chromosome.fitness;
         }
-    }   
+    } 
     
-    public void evaluateProbabilities() {
+    public void evaluateProbabilitiesMax() {
         int probArraySize = chromArray.size();
         probArray = new ArrayList<>(probArraySize);
         double probability = 0;
         for(int i = 0; i < probArraySize; i++) {
             double x = chromArray.get(i).fitness;
             probability = x / sum;
+            probArray.add(probability);
+            probability = 0;
+        }
+    }
+    
+    public void evaluateProbabilitiesMin() {
+        int probArraySize = chromArray.size();
+        probArray = new ArrayList<>(probArraySize);
+        double probability = 0;
+        for(int i = 0; i < probArraySize; i++) {
+            double x = chromArray.get(i).fitness;
+            probability = 1 - (x / sum);
             probArray.add(probability);
             probability = 0;
         }
@@ -69,7 +81,7 @@ public class DebugEvolve {
         }
     }
     
-    public void tournamentRank(Random random, int tourneySize) {
+    public void tournamentRankMax(Random random, int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             ArrayList<DebugChromosome> tournamentArray =  new ArrayList<>(tourneySize);
@@ -104,6 +116,45 @@ public class DebugEvolve {
         }     
     }
     
+     public void tournamentRankMin(Random random, int tourneySize) {
+        parentArray = new ArrayList<>(chromArray.size());
+        for(int i = 0; i < chromArray.size(); i++) {
+            ArrayList<DebugChromosome> tournamentArray =  new ArrayList<>(tourneySize);
+            System.out.println("\n  Choosing chromosome " + (i + 1) + ": ");
+            for(int j = 0; j < tourneySize; j++) {
+                int randomNum = random.nextInt(chromArray.size());
+                System.out.println("  Random number is " + randomNum);
+                System.out.println("  Adding chromosome to tournament: " + Arrays.toString(chromArray.get(randomNum).chromosome));
+                tournamentArray.add(chromArray.get(randomNum));
+            }
+            System.out.println("\n  Complete tournament is: ");
+            for(int j = 0; j < tourneySize; j++) {
+                System.out.println("  " + Arrays.toString(tournamentArray.get(j).chromosome));
+            }
+            double bestFit = 0;
+            System.out.println("\n  Fitnesses of tournament participants: ");
+            for(int j = 0; j < tournamentArray.size(); j++) {
+                if(j == 0) {
+                    bestFit = tournamentArray.get(j).fitness;
+                }
+                if(tournamentArray.get(j).fitness < bestFit)  {
+                    bestFit = tournamentArray.get(j).fitness;
+                }  
+                System.out.println("  " + tournamentArray.get(j).fitness);
+            }
+            int bestIndex = 0;
+            for(int j = 0; j < tournamentArray.size(); j++) {
+                if(tournamentArray.get(j).fitness == bestFit){
+                    bestIndex = j;
+                    System.out.println("\n  Tournament winner is chromosome at index " + bestIndex + ": ");
+                }
+            }
+            System.out.println("  " + Arrays.toString(tournamentArray.get(bestIndex).chromosome));
+            parentArray.add(tournamentArray.get(bestIndex));
+        }     
+    }
+
+    
     public void crossover(Random random, int numCuts, int lowerBound, int upperBound, int varNum) {
         chromLen = parentArray.get(0).chromosome.length;
         childArray = new ArrayList<>(parentArray.size());
@@ -121,6 +172,9 @@ public class DebugEvolve {
             int cutPoint;
             for(int j = 0; j < numCuts; j++) {
                 cutPoint = random.nextInt(chromLen);
+                if (cutPoint == 0) {
+                    cutPoint++;
+                }
                 System.out.println("\n  Cut point is " + cutPoint + ". (" + numCuts + " cut(s) total).");
                 int[] parentASegmentA;
                 int[] parentBSegmentA;
@@ -162,7 +216,6 @@ public class DebugEvolve {
         System.arraycopy(b, 0, result, a.length, b.length);
         return result;
     }
-        
     
 }
 

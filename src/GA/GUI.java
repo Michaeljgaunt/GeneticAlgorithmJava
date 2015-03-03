@@ -22,6 +22,8 @@ public class GUI extends javax.swing.JFrame {
     static boolean debugFlag;
     static boolean rouletteFlag;
     static boolean tournamentFlag;
+    static boolean minFlag;
+    static boolean maxFlag;
     
     public GUI() {
         initComponents();
@@ -35,6 +37,7 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         rankButs = new javax.swing.ButtonGroup();
+        funcButs = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -60,17 +63,20 @@ public class GUI extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         prmrLab = new javax.swing.JLabel();
         semrLab = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        rouletteRankBut = new javax.swing.JRadioButton();
-        tournamentRankBut = new javax.swing.JRadioButton();
-        frModeBut = new javax.swing.JCheckBox();
-        jLabel6 = new javax.swing.JLabel();
-        tourneySizeSp = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
         outputWindow = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         runButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        rouletteRankBut = new javax.swing.JRadioButton();
+        tournamentRankBut = new javax.swing.JRadioButton();
+        jLabel6 = new javax.swing.JLabel();
+        tourneySizeSp = new javax.swing.JSpinner();
+        jPanel3 = new javax.swing.JPanel();
+        minimiseBut = new javax.swing.JRadioButton();
+        maximiseBut = new javax.swing.JRadioButton();
+        frModeBut = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Genetic Algorithm");
@@ -93,23 +99,23 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel2.setText("Upper Bound");
 
-        jLabel3.setText("Number of Chromosomes");
+        jLabel3.setText("Chromosomes");
 
-        jLabel4.setText("Number of Iterations");
+        jLabel4.setText("Iterations");
 
-        jLabel5.setText("Number of Cuts");
+        jLabel5.setText("Cuts");
 
-        jLabel7.setText("Number of Variables");
+        jLabel7.setText("Variables");
 
         numChromsSp.setValue(4);
 
-        lowerBoundSp.setValue(2);
+        lowerBoundSp.setValue(0);
 
         numCutsSp.setValue(1);
 
         numVarsSp.setValue(3);
 
-        numItsSp.setValue(5);
+        numItsSp.setValue(50);
 
         upperBoundSp.setValue(31);
 
@@ -173,7 +179,7 @@ public class GUI extends javax.swing.JFrame {
         prMutRateBut.setMajorTickSpacing(5);
         prMutRateBut.setMinorTickSpacing(1);
         prMutRateBut.setSnapToTicks(true);
-        prMutRateBut.setValue(5);
+        prMutRateBut.setValue(32);
         prMutRateBut.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 prMutRateButStateChanged(evt);
@@ -196,7 +202,7 @@ public class GUI extends javax.swing.JFrame {
         seMutRateBut.setMajorTickSpacing(5);
         seMutRateBut.setMinorTickSpacing(1);
         seMutRateBut.setSnapToTicks(true);
-        seMutRateBut.setValue(5);
+        seMutRateBut.setValue(1);
         seMutRateBut.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 seMutRateButStateChanged(evt);
@@ -207,9 +213,9 @@ public class GUI extends javax.swing.JFrame {
 
         jLabel8.setText("100%");
 
-        prmrLab.setText("5%");
+        prmrLab.setText(prMutRateBut.getValue() + "%");
 
-        semrLab.setText("5%");
+        semrLab.setText(seMutRateBut.getValue() + "%");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -231,14 +237,15 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(prMutRateBut, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                            .addComponent(prMutRateBut, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                             .addComponent(seMutRateBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(prmrLab)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(prmrLab)
+                                .addGap(107, 107, 107)
+                                .addComponent(jLabel8))
                             .addComponent(semrLab))
-                        .addGap(120, 120, 120)
-                        .addComponent(jLabel8)
                         .addGap(55, 55, 55))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -253,63 +260,12 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(seMutRateBut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(semrLab, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(semrLab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(fitnessThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dynamicMutBut)))
-        );
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Mode Options  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-
-        rankButs.add(rouletteRankBut);
-        rouletteRankBut.setText("Roulette Ranking");
-        rouletteRankBut.setSelected(true);
-        rouletteRankBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rouletteRankButActionPerformed(evt);
-            }
-        });
-
-        rankButs.add(tournamentRankBut);
-        tournamentRankBut.setText("Tournament Ranking");
-
-        frModeBut.setText("Full Results Output");
-
-        jLabel6.setText("Tournament Size");
-
-        tourneySizeSp.setValue(3);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(frModeBut)
-                    .addComponent(rouletteRankBut)
-                    .addComponent(tournamentRankBut)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(tourneySizeSp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(rouletteRankBut, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tournamentRankBut)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tourneySizeSp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(frModeBut)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         outputWindow.setColumns(20);
@@ -366,10 +322,107 @@ public class GUI extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addGap(13, 13, 13)
                 .addComponent(runButton)
                 .addGap(18, 18, 18)
                 .addComponent(clearButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Ranking Options  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        rankButs.add(rouletteRankBut);
+        rouletteRankBut.setText("Roulette");
+        rouletteRankBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rouletteRankButActionPerformed(evt);
+            }
+        });
+
+        rankButs.add(tournamentRankBut);
+        tournamentRankBut.setText("Tournament");
+        tournamentRankBut.setSelected(true);
+        tournamentRankBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tournamentRankButActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Tournament Size");
+
+        tourneySizeSp.setValue(3);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(tourneySizeSp, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6))
+                    .addComponent(tournamentRankBut)
+                    .addComponent(rouletteRankBut))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rouletteRankBut, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tournamentRankBut)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tourneySizeSp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Function Options  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        funcButs.add(minimiseBut);
+        minimiseBut.setText("Minimise");
+        minimiseBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minimiseButActionPerformed(evt);
+            }
+        });
+
+        funcButs.add(maximiseBut);
+        maximiseBut.setText("Maximise");
+        maximiseBut.setSelected(true);
+        maximiseBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maximiseButActionPerformed(evt);
+            }
+        });
+
+        frModeBut.setText("Full Results Output");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(minimiseBut)
+                    .addComponent(maximiseBut)
+                    .addComponent(frModeBut))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(minimiseBut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(maximiseBut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(frModeBut)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -380,15 +433,18 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -396,22 +452,23 @@ public class GUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(400, 400, 400))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(14, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -428,6 +485,7 @@ public class GUI extends javax.swing.JFrame {
         mutRate = (Integer)prMutRateBut.getValue();
         boolean mutChanged = false;
         tourneySize = (Integer)tourneySizeSp.getValue();
+        
         if(rouletteRankBut.isSelected()) {
             rouletteFlag = true;
             tournamentFlag = false;
@@ -435,202 +493,407 @@ public class GUI extends javax.swing.JFrame {
             tournamentFlag = true;
             rouletteFlag = false;
         }
+        
+        if(maximiseBut.isSelected()) {
+            maxFlag = true;
+            minFlag = false;
+        } else if(minimiseBut.isSelected()) {
+            minFlag = true;
+            maxFlag = false;
+        }
+        
         if(frModeBut.isSelected()) {
             debugFlag = true;
         } else {
             debugFlag = false;
         }
+        
+        if(minFlag) {
+            if(debugFlag) {
 
-        if(debugFlag) {
-                   
-            Random random = new Random();
-            ObjectiveFunction objfunc = new ObjectiveFunction();
+                Random random = new Random();
+                ObjectiveFunction objfunc = new ObjectiveFunction();
 
-            System.out.println("  Full results mode.");            
-            System.out.println("  Iterating " + numIts + " times.");
-            System.out.println("  Generating " + chromNum + " chromosomes with " + varNum + " variables in the range " + lowerBound + " - " + upperBound + ".");
-            System.out.println("  During crossover, " + numCuts + " cut(s) will be made.");
-            System.out.println("  A mutation rate of " + mutRate + "% will be applied.");
-            if(dynamicMutBut.isSelected()) {
-                System.out.println("  The mutation rate will be lowered to " + seMutRateBut.getValue() + "% if a chromosome reaches the threshold fitness of " + fitnessThreshold.getValue() + ".");
-            }
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-            System.out.println("\n  Generating chromosomes:");
-            ArrayList<DebugChromosome> chromArray = new ArrayList<>(chromNum);
-            for(int i = 0; i < chromNum; i++) {
-                System.out.println("\n  Chromosome " + (i + 1) + ": ");
-                DebugChromosome c = new DebugChromosome(lowerBound, upperBound, varNum);
-                c.generateBitString(random);
-                System.out.println("  " + Arrays.toString(c.chromosome));
-                c.convertBitString();
-                System.out.println("  Values: " + Arrays.toString(c.bitStringValues));
-                c.evaluateFitness(objfunc);
-                System.out.println("  Fitness: " + c.fitness);
-                chromArray.add(c);
-            }
-            System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-            for(int iteration = 0; iteration < numIts; iteration++) {
-
-                System.out.println("\n  Iteration " + (iteration + 1) + ":");
-                for(int i = 0; i < chromArray.size(); i++) {
-                    System.out.println("  " + Arrays.toString(chromArray.get(i).chromosome));
-                }    
-
-                DebugEvolve evolve = new DebugEvolve(chromArray);
-                evolve.getFitnessSum();
-                System.out.println("\n  Sigma fitness is " + evolve.sum);
-                evolve.evaluateProbabilities();
-                System.out.println("\n  Probabilities are: " + evolve.probArray);
-                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-                if(rouletteFlag) {
-                    System.out.println("\n  Ranking parents (roulette method):");
-                    evolve.rouletteRank(random);
-                } else if(tournamentFlag) {
-                    System.out.println("\n  Ranking parents (tournament method, size " + tourneySize + "):");
-                    evolve.tournamentRank(random, tourneySize);
+                System.out.println("  Full results mode (minimising objective function).");            
+                System.out.println("  Iterating " + numIts + " times.");
+                System.out.println("  Generating " + chromNum + " chromosomes with " + varNum + " variables in the range " + lowerBound + " - " + upperBound + ".");
+                System.out.println("  During crossover, " + numCuts + " cut(s) will be made.");
+                System.out.println("  A mutation rate of " + mutRate + "% will be applied.");
+                if(dynamicMutBut.isSelected()) {
+                    System.out.println("  The mutation rate will be lowered to " + seMutRateBut.getValue() + "% if a chromosome reaches the threshold fitness of " + fitnessThreshold.getValue() + ".");
                 }
-                System.out.println("\n  Chosen parents: ");
-                for(int i = 0; i < evolve.parentArray.size(); i++) {
-                    System.out.println(Arrays.toString(evolve.parentArray.get(i).chromosome));
-                }
-                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-                System.out.println("\nPerforming crossover:");
-                evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
-                for(int i = 0; i < chromNum; i++) {       
-                    chromArray = evolve.chromArray;
-                }
-                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-                if(mutRate == 0) {
-                    System.out.println("\n  Mutation rate is 0%, no mutation will be applied.");
-                } else {
-                    System.out.println("\n  Applying mutation rate of " + mutRate + "%...");
-                    for(int i = 0; i < chromNum; i++) {
-                        System.out.println("\n  Chromosome " + (i + 1) + ": ");
-                        chromArray.get(i).mutate(mutRate, random);
-                    }
-                }
-                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-                double bestFit = 0;
-
-                System.out.println("\n  Evaluating chromosomes...");
+                System.out.println("\n  Generating chromosomes:");
+                ArrayList<DebugChromosome> chromArray = new ArrayList<>(chromNum);
                 for(int i = 0; i < chromNum; i++) {
                     System.out.println("\n  Chromosome " + (i + 1) + ": ");
-                    chromArray.get(i).convertBitString();
-                    System.out.println("  Values: " + Arrays.toString(chromArray.get(i).bitStringValues));
-                    chromArray.get(i).evaluateFitness(objfunc);
-                    System.out.println("  Fitness: " + chromArray.get(i).fitness);
+                    DebugChromosome c = new DebugChromosome(lowerBound, upperBound, varNum);
+                    c.generateBitString(random);
+                    System.out.println("  " + Arrays.toString(c.chromosome));
+                    c.convertBitString();
+                    System.out.println("  Values: " + Arrays.toString(c.bitStringValues));
+                    c.evaluateFitness(objfunc);
+                    System.out.println("  Fitness: " + c.fitness);
+                    chromArray.add(c);
                 }
                 System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-                for (DebugChromosome chrom : chromArray) {
-                    if (chrom.fitness > bestFit) {
-                        bestFit = chrom.fitness;
-                    }
-                } 
+                for(int iteration = 0; iteration < numIts; iteration++) {
 
-                int bestIndex = 0;
-                for (int i = 0; i < chromArray.size(); i++) {
-                    if(chromArray.get(i).fitness == bestFit){
-                        bestIndex = i;
-                        if((bestFit >= (Integer)fitnessThreshold.getValue()) && (dynamicMutBut.isSelected()) && (mutChanged == false)) {
-                            System.out.println("  A chromosome has exceeded the fitness threshold, lowering mutation rate to " + (Integer)seMutRateBut.getValue() + "%.");
-                            mutRate = (Integer)seMutRateBut.getValue();
-                            mutChanged = true;
+                    System.out.println("\n  Iteration " + (iteration + 1) + ":");
+                    for(int i = 0; i < chromArray.size(); i++) {
+                        System.out.println("  " + Arrays.toString(chromArray.get(i).chromosome));
+                    }    
+
+                    DebugEvolve evolve = new DebugEvolve(chromArray);
+                    evolve.getFitnessSum();
+                    System.out.println("\n  Sigma fitness is " + evolve.sum);
+                    evolve.evaluateProbabilitiesMin();
+                    System.out.println("\n  Probabilities are: " + evolve.probArray);
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    if(rouletteFlag) {
+                        System.out.println("\n  Ranking parents (roulette method):");
+                        evolve.rouletteRank(random);
+                    } else if(tournamentFlag) {
+                        System.out.println("\n  Ranking parents (tournament method, size " + tourneySize + "):");
+                        evolve.tournamentRankMin(random, tourneySize);
+                    }
+                    System.out.println("\n  Chosen parents: ");
+                    for(int i = 0; i < evolve.parentArray.size(); i++) {
+                        System.out.println(Arrays.toString(evolve.parentArray.get(i).chromosome));
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    System.out.println("\nPerforming crossover:");
+                    evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
+                    for(int i = 0; i < chromNum; i++) {       
+                        chromArray = evolve.chromArray;
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    if(mutRate == 0) {
+                        System.out.println("\n  Mutation rate is 0%, no mutation will be applied.");
+                    } else {
+                        System.out.println("\n  Applying mutation rate of " + mutRate + "%...");
+                        for(int i = 0; i < chromNum; i++) {
+                            System.out.println("\n  Chromosome " + (i + 1) + ": ");
+                            chromArray.get(i).mutate(mutRate, random);
                         }
                     }
-                }
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-                DebugChromosome bestChrom = chromArray.get(bestIndex);
-                System.out.println("\n  On iteration " + (iteration + 1) + ", the best values for the variables found are: " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
-                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            }
-            
-        } else {
-            System.out.println("  Concise results mode.");
-            Random random = new Random();
-            ObjectiveFunction objfunc = new ObjectiveFunction();
+                    double bestFit = 0;
 
-            System.out.println("\n  Randomly generating " + chromNum + " chromosomes...");
-            ArrayList<Chromosome> chromArray = new ArrayList<>(chromNum);
-            System.out.println("  Evaluating chromosomes...");
-            for(int i = 0; i < chromNum; i++) {
-                Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                c.generateBitString(random);
-                c.convertBitString();
-                c.evaluateFitness(objfunc);
-                chromArray.add(c);
-            }
-
-            for(int iteration = 0; iteration < numIts; iteration++) {
-
-                System.out.println("\n  Iteration " + (iteration + 1) + ":");
-
-                Evolve evolve = new Evolve(chromArray);
-                evolve.getFitnessSum();
-                evolve.evaluateProbabilities();
-                if(rouletteFlag) {
-                    System.out.println("  Ranking parents (roulette method)...");
-                    evolve.rouletteRank(random);
-                } else if(tournamentFlag) {
-                    System.out.println("  Ranking parents (tournament method, size " + tourneySize + ")...");
-                    evolve.tournamentRank(random, tourneySize);
-                }
-
-                System.out.println("  Performing crossover...");
-                evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
-                for(int i = 0; i < chromNum; i++) {
-                    chromArray = evolve.chromArray;
-                }
-
-                if(mutRate == 0) {
-                    System.out.println("  Mutation rate is 0%, no mutation will be applied.");
-                } else {
-                    System.out.println("  Applying mutation rate of " + mutRate + "%...");
+                    System.out.println("\n  Evaluating chromosomes...");
                     for(int i = 0; i < chromNum; i++) {
-                        chromArray.get(i).mutate(mutRate, random);
+                        System.out.println("\n  Chromosome " + (i + 1) + ": ");
+                        chromArray.get(i).convertBitString();
+                        System.out.println("  Values: " + Arrays.toString(chromArray.get(i).bitStringValues));
+                        chromArray.get(i).evaluateFitness(objfunc);
+                        System.out.println("  Fitness: " + chromArray.get(i).fitness);
                     }
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    for (int i = 0; i < chromArray.size(); i++) {
+                        if(i == 0) {
+                            bestFit = chromArray.get(i).fitness;
+                        }
+                        if (chromArray.get(i).fitness < bestFit) {
+                            bestFit = chromArray.get(i).fitness;
+                        }
+                    } 
+
+                    int bestIndex = 0;
+                    for (int i = 0; i < chromArray.size(); i++) {
+                        if(chromArray.get(i).fitness == bestFit){
+                            bestIndex = i;
+                            if((bestFit <= (Integer)fitnessThreshold.getValue()) && (dynamicMutBut.isSelected()) && (mutChanged == false)) {
+                                System.out.println("  A chromosome has exceeded the fitness threshold, lowering mutation rate to " + (Integer)seMutRateBut.getValue() + "%.");
+                                mutRate = (Integer)seMutRateBut.getValue();
+                                mutChanged = true;
+                            }
+                        }
+                    }
+
+                    DebugChromosome bestChrom = chromArray.get(bestIndex);
+                    System.out.println("\n  On iteration " + (iteration + 1) + ", the best values for the variables found are: " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                 }
 
-                double bestFit = 0;
+            } else {
+                System.out.println("  Concise results mode (minimising objective function).");
+                Random random = new Random();
+                ObjectiveFunction objfunc = new ObjectiveFunction();
 
+                System.out.println("\n  Randomly generating " + chromNum + " chromosomes...");
+                ArrayList<Chromosome> chromArray = new ArrayList<>(chromNum);
                 System.out.println("  Evaluating chromosomes...");
                 for(int i = 0; i < chromNum; i++) {
-                    chromArray.get(i).convertBitString();
-                    chromArray.get(i).evaluateFitness(objfunc);
+                    Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
+                    c.generateBitString(random);
+                    c.convertBitString();
+                    c.evaluateFitness(objfunc);
+                    chromArray.add(c);
                 }
 
-                for (Chromosome chrom : chromArray) {
-                    if (chrom.fitness > bestFit) {
-                        bestFit = chrom.fitness;
+                for(int iteration = 0; iteration < numIts; iteration++) {
+
+                    System.out.println("\n  Iteration " + (iteration + 1) + ":");
+
+                    Evolve evolve = new Evolve(chromArray);
+                    evolve.getFitnessSum();
+                    evolve.evaluateProbabilitiesMin();
+                    if(rouletteFlag) {
+                        System.out.println("  Ranking parents (roulette method)...");
+                        evolve.rouletteRank(random);
+                    } else if(tournamentFlag) {
+                        System.out.println("  Ranking parents (tournament method, size " + tourneySize + ")...");
+                        evolve.tournamentRankMin(random, tourneySize);
                     }
-                }
 
-                int bestIndex = 0;
-                for (int i = 0; i < chromArray.size(); i++) {
-                    if(chromArray.get(i).fitness == bestFit){
-                        bestIndex = i;
-                        if((bestFit >= (Integer)fitnessThreshold.getValue()) && (dynamicMutBut.isSelected()) && (mutChanged == false)) {
-                            System.out.println("  A chromosome has exceeded the fitness threshold, lowering mutation rate to " + (Integer)seMutRateBut.getValue() + "%.");
-                            mutRate = (Integer)seMutRateBut.getValue();
-                            mutChanged = true;
+                    System.out.println("  Performing crossover...");
+                    evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
+                    for(int i = 0; i < chromNum; i++) {
+                        chromArray = evolve.chromArray;
+                    }
+
+                    if(mutRate == 0) {
+                        System.out.println("  Mutation rate is 0%, no mutation will be applied.");
+                    } else {
+                        System.out.println("  Applying mutation rate of " + mutRate + "%...");
+                        for(int i = 0; i < chromNum; i++) {
+                            chromArray.get(i).mutate(mutRate, random);
                         }
                     }
+
+                    double bestFit = 0;
+
+                    System.out.println("  Evaluating chromosomes...");
+                    for(int i = 0; i < chromNum; i++) {
+                        chromArray.get(i).convertBitString();
+                        chromArray.get(i).evaluateFitness(objfunc);
+                    }
+
+                    for (int i = 0; i < chromArray.size(); i++) {
+                        if(i == 0) {
+                            bestFit = chromArray.get(i).fitness;
+                        }
+                        if (chromArray.get(i).fitness < bestFit) {
+                            bestFit = chromArray.get(i).fitness;
+                        }
+                    }
+
+                    int bestIndex = 0;
+                    for (int i = 0; i < chromArray.size(); i++) {
+                        if(chromArray.get(i).fitness == bestFit){
+                            bestIndex = i;
+                            if((bestFit <= (Integer)fitnessThreshold.getValue()) && (dynamicMutBut.isSelected()) && (mutChanged == false)) {
+                                System.out.println("  A chromosome has exceeded the fitness threshold, lowering mutation rate to " + (Integer)seMutRateBut.getValue() + "%.");
+                                mutRate = (Integer)seMutRateBut.getValue();
+                                mutChanged = true;
+                            }
+                        }
+                    }
+
+                    Chromosome bestChrom = chromArray.get(bestIndex);
+                    System.out.println("\n  Best values found on iteration " + (iteration + 1) + ": " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+                }
+            }
+        } if(maxFlag) {
+            if(debugFlag) {
+
+                Random random = new Random();
+                ObjectiveFunction objfunc = new ObjectiveFunction();
+
+                System.out.println("  Full results mode (maximising objective function).");            
+                System.out.println("  Iterating " + numIts + " times.");
+                System.out.println("  Generating " + chromNum + " chromosomes with " + varNum + " variables in the range " + lowerBound + " - " + upperBound + ".");
+                System.out.println("  During crossover, " + numCuts + " cut(s) will be made.");
+                System.out.println("  A mutation rate of " + mutRate + "% will be applied.");
+                if(dynamicMutBut.isSelected()) {
+                    System.out.println("  The mutation rate will be lowered to " + seMutRateBut.getValue() + "% if a chromosome reaches the threshold fitness of " + fitnessThreshold.getValue() + ".");
+                }
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                System.out.println("\n  Generating chromosomes:");
+                ArrayList<DebugChromosome> chromArray = new ArrayList<>(chromNum);
+                for(int i = 0; i < chromNum; i++) {
+                    System.out.println("\n  Chromosome " + (i + 1) + ": ");
+                    DebugChromosome c = new DebugChromosome(lowerBound, upperBound, varNum);
+                    c.generateBitString(random);
+                    System.out.println("  " + Arrays.toString(c.chromosome));
+                    c.convertBitString();
+                    System.out.println("  Values: " + Arrays.toString(c.bitStringValues));
+                    c.evaluateFitness(objfunc);
+                    System.out.println("  Fitness: " + c.fitness);
+                    chromArray.add(c);
+                }
+                System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                for(int iteration = 0; iteration < numIts; iteration++) {
+
+                    System.out.println("\n  Iteration " + (iteration + 1) + ":");
+                    for(int i = 0; i < chromArray.size(); i++) {
+                        System.out.println("  " + Arrays.toString(chromArray.get(i).chromosome));
+                    }    
+
+                    DebugEvolve evolve = new DebugEvolve(chromArray);
+                    evolve.getFitnessSum();
+                    System.out.println("\n  Sigma fitness is " + evolve.sum);
+                    evolve.evaluateProbabilitiesMax();
+                    System.out.println("\n  Probabilities are: " + evolve.probArray);
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    if(rouletteFlag) {
+                        System.out.println("\n  Ranking parents (roulette method):");
+                        evolve.rouletteRank(random);
+                    } else if(tournamentFlag) {
+                        System.out.println("\n  Ranking parents (tournament method, size " + tourneySize + "):");
+                        evolve.tournamentRankMax(random, tourneySize);
+                    }
+                    System.out.println("\n  Chosen parents: ");
+                    for(int i = 0; i < evolve.parentArray.size(); i++) {
+                        System.out.println(Arrays.toString(evolve.parentArray.get(i).chromosome));
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    System.out.println("\nPerforming crossover:");
+                    evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
+                    for(int i = 0; i < chromNum; i++) {       
+                        chromArray = evolve.chromArray;
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    if(mutRate == 0) {
+                        System.out.println("\n  Mutation rate is 0%, no mutation will be applied.");
+                    } else {
+                        System.out.println("\n  Applying mutation rate of " + mutRate + "%...");
+                        for(int i = 0; i < chromNum; i++) {
+                            System.out.println("\n  Chromosome " + (i + 1) + ": ");
+                            chromArray.get(i).mutate(mutRate, random);
+                        }
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    double bestFit = 0;
+
+                    System.out.println("\n  Evaluating chromosomes...");
+                    for(int i = 0; i < chromNum; i++) {
+                        System.out.println("\n  Chromosome " + (i + 1) + ": ");
+                        chromArray.get(i).convertBitString();
+                        System.out.println("  Values: " + Arrays.toString(chromArray.get(i).bitStringValues));
+                        chromArray.get(i).evaluateFitness(objfunc);
+                        System.out.println("  Fitness: " + chromArray.get(i).fitness);
+                    }
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    for (int i = 0; i < chromArray.size(); i++) {
+                        if (chromArray.get(i).fitness > bestFit) {
+                            bestFit = chromArray.get(i).fitness;
+                        }
+                    } 
+
+                    int bestIndex = 0;
+                    for (int i = 0; i < chromArray.size(); i++) {
+                        if(chromArray.get(i).fitness == bestFit){
+                            bestIndex = i;
+                            if((bestFit >= (Integer)fitnessThreshold.getValue()) && (dynamicMutBut.isSelected()) && (mutChanged == false)) {
+                                System.out.println("  A chromosome has exceeded the fitness threshold, lowering mutation rate to " + (Integer)seMutRateBut.getValue() + "%.");
+                                mutRate = (Integer)seMutRateBut.getValue();
+                                mutChanged = true;
+                            }
+                        }
+                    }
+
+                    DebugChromosome bestChrom = chromArray.get(bestIndex);
+                    System.out.println("\n  On iteration " + (iteration + 1) + ", the best values for the variables found are: " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+                    System.out.println("\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                 }
 
-                Chromosome bestChrom = chromArray.get(bestIndex);
-                System.out.println("\n  Best values found on iteration " + (iteration + 1) + ": " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+            } else {
+                System.out.println("  Concise results mode (minimising objective function).");
+                Random random = new Random();
+                ObjectiveFunction objfunc = new ObjectiveFunction();
+
+                System.out.println("\n  Randomly generating " + chromNum + " chromosomes...");
+                ArrayList<Chromosome> chromArray = new ArrayList<>(chromNum);
+                System.out.println("  Evaluating chromosomes...");
+                for(int i = 0; i < chromNum; i++) {
+                    Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
+                    c.generateBitString(random);
+                    c.convertBitString();
+                    c.evaluateFitness(objfunc);
+                    chromArray.add(c);
+                }
+
+                for(int iteration = 0; iteration < numIts; iteration++) {
+
+                    System.out.println("\n  Iteration " + (iteration + 1) + ":");
+
+                    Evolve evolve = new Evolve(chromArray);
+                    evolve.getFitnessSum();
+                    evolve.evaluateProbabilitiesMax();
+                    if(rouletteFlag) {
+                        System.out.println("  Ranking parents (roulette method)...");
+                        evolve.rouletteRank(random);
+                    } else if(tournamentFlag) {
+                        System.out.println("  Ranking parents (tournament method, size " + tourneySize + ")...");
+                        evolve.tournamentRankMax(random, tourneySize);
+                    }
+
+                    System.out.println("  Performing crossover...");
+                    evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
+                    for(int i = 0; i < chromNum; i++) {
+                        chromArray = evolve.chromArray;
+                    }
+
+                    if(mutRate == 0) {
+                        System.out.println("  Mutation rate is 0%, no mutation will be applied.");
+                    } else {
+                        System.out.println("  Applying mutation rate of " + mutRate + "%...");
+                        for(int i = 0; i < chromNum; i++) {
+                            chromArray.get(i).mutate(mutRate, random);
+                        }
+                    }
+
+                    double bestFit = 0;
+
+                    System.out.println("  Evaluating chromosomes...");
+                    for(int i = 0; i < chromNum; i++) {
+                        chromArray.get(i).convertBitString();
+                        chromArray.get(i).evaluateFitness(objfunc);
+                    }
+
+                    for (int i = 0; i < chromArray.size(); i++) {
+                        if (chromArray.get(i).fitness > bestFit) {
+                            bestFit = chromArray.get(i).fitness;
+                        }
+                    }
+
+                    int bestIndex = 0;
+                    for (int i = 0; i < chromArray.size(); i++) {
+                        if(chromArray.get(i).fitness == bestFit){
+                            bestIndex = i;
+                            if((bestFit >= (Integer)fitnessThreshold.getValue()) && (dynamicMutBut.isSelected()) && (mutChanged == false)) {
+                                System.out.println("  A chromosome has exceeded the fitness threshold, lowering mutation rate to " + (Integer)seMutRateBut.getValue() + "%.");
+                                mutRate = (Integer)seMutRateBut.getValue();
+                                mutChanged = true;
+                            }
+                        }
+                    }
+
+                    Chromosome bestChrom = chromArray.get(bestIndex);
+                    System.out.println("\n  Best values found on iteration " + (iteration + 1) + ": " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+                }
             }
         }
     }//GEN-LAST:event_runButtonActionPerformed
 
     private void rouletteRankButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rouletteRankButActionPerformed
-        // TODO add your handling code here:
+        tourneySizeSp.setEnabled(false);
+        jLabel6.setEnabled(false);
     }//GEN-LAST:event_rouletteRankButActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
@@ -649,11 +912,27 @@ public class GUI extends javax.swing.JFrame {
         semrLab.setText(seMutRateBut.getValue() + "%");
     }//GEN-LAST:event_seMutRateButStateChanged
 
+    private void minimiseButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimiseButActionPerformed
+        rouletteRankBut.setEnabled(false);
+        rankButs.clearSelection();
+        tournamentRankBut.setSelected(true);
+    }//GEN-LAST:event_minimiseButActionPerformed
+
+    private void maximiseButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maximiseButActionPerformed
+        rouletteRankBut.setEnabled(true);
+    }//GEN-LAST:event_maximiseButActionPerformed
+
+    private void tournamentRankButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tournamentRankButActionPerformed
+        tourneySizeSp.setEnabled(true);
+        jLabel6.setEnabled(true);
+    }//GEN-LAST:event_tournamentRankButActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
     private javax.swing.JCheckBox dynamicMutBut;
     private javax.swing.JSpinner fitnessThreshold;
     private javax.swing.JCheckBox frModeBut;
+    private javax.swing.ButtonGroup funcButs;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -670,8 +949,11 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner lowerBoundSp;
+    private javax.swing.JRadioButton maximiseBut;
+    private javax.swing.JRadioButton minimiseBut;
     private javax.swing.JSpinner numChromsSp;
     private javax.swing.JSpinner numCutsSp;
     private javax.swing.JSpinner numItsSp;

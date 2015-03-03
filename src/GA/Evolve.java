@@ -21,14 +21,24 @@ public class Evolve {
         for (Chromosome chromosome : chromArray) {
             sum += chromosome.fitness;
         }
-    }   
-    
-    public void evaluateProbabilities() {
+    } 
+        
+    public void evaluateProbabilitiesMax() {
         int probArraySize = chromArray.size();
         probArray = new ArrayList<>(probArraySize);
         for(int i = 0; i < probArraySize; i++) {
             double x = chromArray.get(i).fitness;
             double probability = x / sum;
+            probArray.add(probability);
+        }
+    }
+    
+    public void evaluateProbabilitiesMin() {
+        int probArraySize = chromArray.size();
+        probArray = new ArrayList<>(probArraySize);
+        for(int i = 0; i < probArraySize; i++) {
+            double x = chromArray.get(i).fitness;
+            double probability = 1 - (x / sum);
             probArray.add(probability);
         }
     }
@@ -61,7 +71,7 @@ public class Evolve {
         }
     }
     
-    public void tournamentRank(Random random, int tourneySize) {
+    public void tournamentRankMax(Random random, int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             ArrayList<Chromosome> tournamentArray =  new ArrayList<>(tourneySize);
@@ -69,11 +79,36 @@ public class Evolve {
                 int randomNum = random.nextInt(chromArray.size());
                 tournamentArray.add(chromArray.get(randomNum));
             }
-            for(int j = 0; j < tourneySize; j++) {
-            }
             double bestFit = 0;
             for(int j = 0; j < tournamentArray.size(); j++) {
                 if(tournamentArray.get(j).fitness > bestFit)  {
+                    bestFit = tournamentArray.get(j).fitness;
+                }  
+            }
+            int bestIndex = 0;
+            for(int j = 0; j < tournamentArray.size(); j++) {
+                if(tournamentArray.get(j).fitness == bestFit){
+                    bestIndex = j;
+                }
+            }
+            parentArray.add(tournamentArray.get(bestIndex));
+        }     
+    }
+    
+    public void tournamentRankMin(Random random, int tourneySize) {
+        parentArray = new ArrayList<>(chromArray.size());
+        for(int i = 0; i < chromArray.size(); i++) {
+            ArrayList<Chromosome> tournamentArray =  new ArrayList<>(tourneySize);
+            for(int j = 0; j < tourneySize; j++) {
+                int randomNum = random.nextInt(chromArray.size());
+                tournamentArray.add(chromArray.get(randomNum));
+            }
+            double bestFit = 0;
+            for(int j = 0; j < tournamentArray.size(); j++) {
+                if(j == 0) {
+                    bestFit = tournamentArray.get(j).fitness;
+                }
+                if(tournamentArray.get(j).fitness < bestFit)  {
                     bestFit = tournamentArray.get(j).fitness;
                 }  
             }
@@ -102,6 +137,9 @@ public class Evolve {
             int cutPoint;
             for(int j = 0; j < numCuts; j++) {
                 cutPoint = random.nextInt(chromLen);
+                if (cutPoint == 0) {
+                    cutPoint++;
+                }
                 int[] parentASegmentA;
                 int[] parentBSegmentA;
                 int[] parentASegmentB;
