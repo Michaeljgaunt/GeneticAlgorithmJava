@@ -69,12 +69,12 @@ public class DebugChromosome {
            int randomNum = random.nextInt(100) + 1;
            if(randomNum <= mutRate) {
                mutCounter++;
-               System.out.println("Bit number " + (i + 1) + " has mutated from " + chromosome[i] + " to " + (1 - chromosome[i]) + ".");
+               System.out.println("  Bit number " + (i + 1) + " has mutated from " + chromosome[i] + " to " + (1 - chromosome[i]) + ".");
                chromosome[i] = 1 - chromosome[i];
            }
         }
         if(mutCounter == 0) {
-            System.out.println("No mutations occured.");
+            System.out.println("  No mutations occured.");
         }
     }
              

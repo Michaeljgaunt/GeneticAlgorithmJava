@@ -3,7 +3,7 @@ package GA;
 public class ObjectiveFunction {
      
     public double ObjectiveFunction(double[] variables) {
-        return ((10 * variables[0]) * Math.sin(variables[1]) + (4 * variables[1]) * Math.cos(variables[2]));
+        return ((10 * variables[0]) * (9 * variables[1]) * (Math.pow(variables[2], 3)));
     }
     
 }

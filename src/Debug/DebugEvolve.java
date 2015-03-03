@@ -39,7 +39,7 @@ public class DebugEvolve {
         float randomNum = random.nextFloat();
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
-            System.out.println("\nChoosing chromosome " + (i + 1) + ": ");
+            System.out.println("\n  Choosing chromosome " + (i + 1) + ": ");
             if(parentArray.isEmpty()) {
                 double bestProb = 0;
                 for(int j = 0; j < probArray.size(); j++) {
@@ -48,17 +48,17 @@ public class DebugEvolve {
                     }  
                 }
                 int bestIndex = probArray.indexOf(bestProb);
-                System.out.println("Surviving parent: " + Arrays.toString(chromArray.get(bestIndex).chromosome));
+                System.out.println("  Surviving parent: " + Arrays.toString(chromArray.get(bestIndex).chromosome));
                 parentArray.add(chromArray.get(bestIndex));
             } else {
                 double total = 0;
-                System.out.println("Random number is " + randomNum);
+                System.out.println("  Random number is " + randomNum);
                 for(int k = 0; k < chromArray.size(); k++) {
                     total += probArray.get(k);
-                    System.out.println("Total is " + total);
+                    System.out.println("  Total is " + total);
                     if(total >= randomNum) {
-                        System.out.println("Total has exceeded random number, adding in chromosome with index " + k + ":");
-                        System.out.println(Arrays.toString(chromArray.get(k).chromosome));
+                        System.out.println("  Total has exceeded random number, adding in chromosome with index " + k + ":");
+                        System.out.println("  " + Arrays.toString(chromArray.get(k).chromosome));
                         parentArray.add(chromArray.get(k));
                         total = 0;
                         randomNum = random.nextFloat();
@@ -73,33 +73,33 @@ public class DebugEvolve {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             ArrayList<DebugChromosome> tournamentArray =  new ArrayList<>(tourneySize);
-            System.out.println("\nChoosing chromosome " + (i + 1) + ": ");
+            System.out.println("\n  Choosing chromosome " + (i + 1) + ": ");
             for(int j = 0; j < tourneySize; j++) {
                 int randomNum = random.nextInt(chromArray.size());
-                System.out.println("Random number is " + randomNum);
-                System.out.println("Adding chromosome to tournament: " + Arrays.toString(chromArray.get(randomNum).chromosome));
+                System.out.println("  Random number is " + randomNum);
+                System.out.println("  Adding chromosome to tournament: " + Arrays.toString(chromArray.get(randomNum).chromosome));
                 tournamentArray.add(chromArray.get(randomNum));
             }
-            System.out.println("\nComplete tournament is: ");
+            System.out.println("\n  Complete tournament is: ");
             for(int j = 0; j < tourneySize; j++) {
-                System.out.println(Arrays.toString(tournamentArray.get(j).chromosome));
+                System.out.println("  " + Arrays.toString(tournamentArray.get(j).chromosome));
             }
             double bestFit = 0;
-            System.out.println("\nFitnesses of tournament participants: ");
+            System.out.println("\n  Fitnesses of tournament participants: ");
             for(int j = 0; j < tournamentArray.size(); j++) {
                 if(tournamentArray.get(j).fitness > bestFit)  {
                     bestFit = tournamentArray.get(j).fitness;
                 }  
-                System.out.println(tournamentArray.get(j).fitness);
+                System.out.println("  " + tournamentArray.get(j).fitness);
             }
             int bestIndex = 0;
             for(int j = 0; j < tournamentArray.size(); j++) {
                 if(tournamentArray.get(j).fitness == bestFit){
                     bestIndex = j;
-                    System.out.println("\nTournament winner is chromosome at index " + bestIndex + ": ");
+                    System.out.println("\n  Tournament winner is chromosome at index " + bestIndex + ": ");
                 }
             }
-            System.out.println(Arrays.toString(tournamentArray.get(bestIndex).chromosome));
+            System.out.println("  " + Arrays.toString(tournamentArray.get(bestIndex).chromosome));
             parentArray.add(tournamentArray.get(bestIndex));
         }     
     }
@@ -116,13 +116,12 @@ public class DebugEvolve {
         for(int i = 1; i <= numChromPairs; i++) {
             int[] chromA = parentArray.get((2 * i) - 2).chromosome;
             int[] chromB = parentArray.get((2 * i) - 1).chromosome;
-            System.out.println("\nParents to mate: ");
-            System.out.println(Arrays.toString(chromA));
-            System.out.println(Arrays.toString(chromB));
+            System.out.println("\n  Mother:  " + Arrays.toString(chromA));
+            System.out.println("\n  Father: " + Arrays.toString(chromB));
             int cutPoint;
             for(int j = 0; j < numCuts; j++) {
                 cutPoint = random.nextInt(chromLen);
-                System.out.println("\nCut point is " + cutPoint + ". (" + numCuts + " cuts total).");
+                System.out.println("\n  Cut point is " + cutPoint + ". (" + numCuts + " cut(s) total).");
                 int[] parentASegmentA;
                 int[] parentBSegmentA;
                 int[] parentASegmentB;
@@ -134,12 +133,13 @@ public class DebugEvolve {
                 parentASegmentB = Arrays.copyOfRange(chromA, cutPoint, chromA.length);
                 parentBSegmentA = Arrays.copyOfRange(chromB, 0, cutPoint);
                 parentBSegmentB = Arrays.copyOfRange(chromB, cutPoint, chromB.length);
-                System.out.println("\nChild A will consist of: ");
-                System.out.println("Parent 1, Fragment 1: " + Arrays.toString(parentASegmentA));
-                System.out.println("Parent 2, Fragment 2: " + Arrays.toString(parentBSegmentB));
-                System.out.println("\nChild B will consist of: ");
-                System.out.println("Parent 2, Fragment 1: " + Arrays.toString(parentBSegmentA));
-                System.out.println("Parent 1, Fragment 2: " + Arrays.toString(parentASegmentB));
+                System.out.println("\n  Brother will consist of: ");
+                System.out.println("  Mother, Fragment 1: " + Arrays.toString(parentASegmentA));
+                System.out.println("  Father, Fragment 2: " + Arrays.toString(parentBSegmentB));
+                System.out.println("\n  Sister will consist of: ");
+                System.out.println("  Father, Fragment 1: " + Arrays.toString(parentBSegmentA));
+                System.out.println("  Mother, Fragment 2: " + Arrays.toString(parentASegmentB));
+                System.out.println("  ------------------------------------------------------------------");
 
                 childA = recombine(parentASegmentA, parentBSegmentB);
                 childB = recombine(parentBSegmentA, parentASegmentB);
@@ -148,9 +148,9 @@ public class DebugEvolve {
                 childArray.get((2 * i) - 1).chromosome = childB;  
             }
         }
-        System.out.println("\nChild chromosomes: ");
+        System.out.println("\n  Child chromosomes: ");
         for(int i = 0; i < childArray.size(); i++) {
-            System.out.println(Arrays.toString(childArray.get(i).chromosome));
+            System.out.println("  " + Arrays.toString(childArray.get(i).chromosome));
         }
         chromArray = childArray;
     }
