@@ -1,9 +1,16 @@
+/*
+ * The chromosome class contains the bit-string and other chromosomal attributes.
+ * Various methods are provided to calculate fitness and bit-string value. 
+ * A mutation method is also provided.
+ */
+
 package GA;
 
 import java.util.Random;
 
 public class Chromosome {
     
+    //Declaring class variables.
     private ObjectiveFunction obj;
     
     public int lowerBound,
@@ -17,6 +24,7 @@ public class Chromosome {
     
     public double fitness;
     
+    //Constructor, takes in the range of values and number of variables.
     public Chromosome(int lowerBound, int upperBound, int numVars) {
         
         this.lowerBound = lowerBound;
@@ -24,6 +32,7 @@ public class Chromosome {
         this.numVars = numVars;
     }
     
+    //Method to randomly generate a bitstring.
     public void generateBitString(Random random) {
         
        bitStringLength = (int)(Math.ceil(Math.log(upperBound) / Math.log(2)));
@@ -40,6 +49,7 @@ public class Chromosome {
        }
     }
        
+    //Method to convert the bitstring to its decimal value.
     public void convertBitString() {
         
         bitStringValues = new double[numVars];
@@ -58,10 +68,12 @@ public class Chromosome {
         }
     }
     
+    //Method to evaluate chromosomal fitness.
     public void evaluateFitness(ObjectiveFunction obj) {
         fitness = obj.ObjectiveFunction(bitStringValues);
     }
     
+    //Method to mutate the chromosome by a given mutation rate.
     public void mutate(int mutRate, Random random) {
         
         for(int i = 0; i < chromosome.length; i++) {

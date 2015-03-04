@@ -1,3 +1,7 @@
+/*
+ * The CustomOutputStream class reassigns System.out to swing text areas.
+ */
+
 package GA;
 
 import java.io.IOException;

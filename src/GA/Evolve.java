@@ -1,3 +1,8 @@
+/*
+ * The evolve class contains the methods that perform some chromosome evaluation
+ * and ranking/crossover of chromosomes.
+ */
+
 package GA;
 
 import java.util.ArrayList;
@@ -6,6 +11,7 @@ import java.util.Random;
 
 public class Evolve {
     
+    //Declaring class variables.
     public ArrayList<Chromosome> chromArray;
     double sum = 0;
     ArrayList<Double> probArray;
@@ -13,17 +19,20 @@ public class Evolve {
     int chromLen = 0;
     ArrayList<Chromosome> childArray;
     
+    //Constructor, takes in a list of chromosomes.
     public Evolve(ArrayList<Chromosome> chromosomeArray) {
         chromArray = chromosomeArray;
     }
     
+    //Method to sum the fitness values of the chromosomes in the list.
     public void getFitnessSum() {
         for (Chromosome chromosome : chromArray) {
             sum += chromosome.fitness;
         }
     } 
         
-    public void evaluateProbabilitiesMax() {
+    //Method to calculate probabilities of chromosomes.
+    public void evaluateProbabilities() {
         int probArraySize = chromArray.size();
         probArray = new ArrayList<>(probArraySize);
         for(int i = 0; i < probArraySize; i++) {
@@ -33,16 +42,7 @@ public class Evolve {
         }
     }
     
-    public void evaluateProbabilitiesMin() {
-        int probArraySize = chromArray.size();
-        probArray = new ArrayList<>(probArraySize);
-        for(int i = 0; i < probArraySize; i++) {
-            double x = chromArray.get(i).fitness;
-            double probability = 1 - (x / sum);
-            probArray.add(probability);
-        }
-    }
-    
+    //Method to rank chromosomes using the roulette method.
     public void rouletteRank(Random random) {
         float randomNum = random.nextFloat();
         parentArray = new ArrayList<>(chromArray.size());
@@ -71,6 +71,7 @@ public class Evolve {
         }
     }
     
+    //Method to rank chromosomes using the tournament method (for maximising functions).
     public void tournamentRankMax(Random random, int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
@@ -95,6 +96,7 @@ public class Evolve {
         }     
     }
     
+    //Method to rank chromosomes using the tournament method (for minimising functions).
     public void tournamentRankMin(Random random, int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
@@ -122,6 +124,7 @@ public class Evolve {
         }     
     }
     
+    //Method for performing crossover of chromosomes.
     public void crossover(Random random, int numCuts, int lowerBound, int upperBound, int varNum) {
         chromLen = parentArray.get(0).chromosome.length;
         childArray = new ArrayList<>(parentArray.size());
@@ -162,6 +165,7 @@ public class Evolve {
         chromArray = childArray;
     }
     
+    //Method to recombine chromosomal fragments into a complete chromosome.
     public static int[] recombine(int[] a, int[] b){
         int length = a.length + b.length;
         int[] result = new int[length];

@@ -1,24 +1,28 @@
-package Debug;
+/*
+ * A clone of the evolve class with slightly different methods.
+ */
+
+package FullResults;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class DebugEvolve {
+public class FREvolve {
     
-    public ArrayList<DebugChromosome> chromArray;
+    public ArrayList<FRChromosome> chromArray;
     public double sum = 0;
     public ArrayList<Double> probArray;
-    public ArrayList<DebugChromosome> parentArray;
+    public ArrayList<FRChromosome> parentArray;
     public int chromLen = 0;
-    public ArrayList<DebugChromosome> childArray;
+    public ArrayList<FRChromosome> childArray;
     
-    public DebugEvolve(ArrayList<DebugChromosome> chromosomeArray) {
+    public FREvolve(ArrayList<FRChromosome> chromosomeArray) {
         chromArray = chromosomeArray;
     }
     
     public void getFitnessSum() {
-        for (DebugChromosome chromosome : chromArray) {
+        for (FRChromosome chromosome : chromArray) {
             sum += chromosome.fitness;
         }
     } 
@@ -34,19 +38,8 @@ public class DebugEvolve {
             probability = 0;
         }
     }
-    
-    public void evaluateProbabilitiesMin() {
-        int probArraySize = chromArray.size();
-        probArray = new ArrayList<>(probArraySize);
-        double probability = 0;
-        for(int i = 0; i < probArraySize; i++) {
-            double x = chromArray.get(i).fitness;
-            probability = 1 - (x / sum);
-            probArray.add(probability);
-            probability = 0;
-        }
-    }
-    
+  
+    //Roulette ranking method with descripitve print statements for "full results mode"
     public void rouletteRank(Random random) {
         float randomNum = random.nextFloat();
         parentArray = new ArrayList<>(chromArray.size());
@@ -81,10 +74,11 @@ public class DebugEvolve {
         }
     }
     
+    //Tournament ranking method with descripitve print statements for "full results mode"
     public void tournamentRankMax(Random random, int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
-            ArrayList<DebugChromosome> tournamentArray =  new ArrayList<>(tourneySize);
+            ArrayList<FRChromosome> tournamentArray =  new ArrayList<>(tourneySize);
             System.out.println("\n  Choosing chromosome " + (i + 1) + ": ");
             for(int j = 0; j < tourneySize; j++) {
                 int randomNum = random.nextInt(chromArray.size());
@@ -116,10 +110,11 @@ public class DebugEvolve {
         }     
     }
     
-     public void tournamentRankMin(Random random, int tourneySize) {
+    //Tournament ranking method with descripitve print statements for "full results mode"
+    public void tournamentRankMin(Random random, int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
-            ArrayList<DebugChromosome> tournamentArray =  new ArrayList<>(tourneySize);
+            ArrayList<FRChromosome> tournamentArray =  new ArrayList<>(tourneySize);
             System.out.println("\n  Choosing chromosome " + (i + 1) + ": ");
             for(int j = 0; j < tourneySize; j++) {
                 int randomNum = random.nextInt(chromArray.size());
@@ -154,12 +149,12 @@ public class DebugEvolve {
         }     
     }
 
-    
+    //Crossover method with descripitve print statements for "full results mode"
     public void crossover(Random random, int numCuts, int lowerBound, int upperBound, int varNum) {
         chromLen = parentArray.get(0).chromosome.length;
         childArray = new ArrayList<>(parentArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
-            DebugChromosome c = new DebugChromosome(lowerBound, upperBound, varNum);
+            FRChromosome c = new FRChromosome(lowerBound, upperBound, varNum);
             c.generateBitString(random);
             childArray.add(c);
         }
@@ -209,6 +204,7 @@ public class DebugEvolve {
         chromArray = childArray;
     }
     
+    //Recombine method with descripitve print statements for "full results mode"
     public static int[] recombine(int[] a, int[] b){
         int length = a.length + b.length;
         int[] result = new int[length];

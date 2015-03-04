@@ -1,9 +1,13 @@
-package Debug;
+/*
+ * A clone of the chromosome class. Provides a slightly different mutate method.
+ */
+
+package FullResults;
 
 import GA.ObjectiveFunction;
 import java.util.Random;
 
-public class DebugChromosome {
+public class FRChromosome {
     
     private ObjectiveFunction obj;
     
@@ -18,7 +22,7 @@ public class DebugChromosome {
     
     public double fitness;
     
-    public DebugChromosome(int lowerBound, int upperBound, int numVars) {
+    public FRChromosome(int lowerBound, int upperBound, int numVars) {
         
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
@@ -63,6 +67,8 @@ public class DebugChromosome {
         fitness = obj.ObjectiveFunction(bitStringValues);
     }
     
+    //Slightly different mutate method that contains descriptive print statements for the 
+    //"full results mode" option.
     public void mutate(int mutRate, Random random) {
         int mutCounter = 0;
         for(int i = 0; i < chromosome.length; i++) {
