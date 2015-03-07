@@ -83,6 +83,23 @@ public class Chromosome {
            }
         }
     }
+    
+    //Slightly different mutate method that contains descriptive print statements for the 
+    //"full results mode" option.
+    public void mutateFR(int mutRate, Random random) {
+        int mutCounter = 0;
+        for(int i = 0; i < chromosome.length; i++) {
+           int randomNum = random.nextInt(100) + 1;
+           if(randomNum <= mutRate) {
+               mutCounter++;
+               System.out.println("  Bit number " + (i + 1) + " has mutated from " + chromosome[i] + " to " + (1 - chromosome[i]) + ".");
+               chromosome[i] = 1 - chromosome[i];
+           }
+        }
+        if(mutCounter == 0) {
+            System.out.println("  No mutations occured.");
+        }
+    }
              
 }
 
