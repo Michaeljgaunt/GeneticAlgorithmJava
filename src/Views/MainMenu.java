@@ -33,7 +33,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        valueTypeLabel.setText("Select Value Types:");
+        valueTypeLabel.setText("Select Variable Types:");
 
         javax.swing.GroupLayout SelectValTypeLayout = new javax.swing.GroupLayout(SelectValType);
         SelectValType.setLayout(SelectValTypeLayout);

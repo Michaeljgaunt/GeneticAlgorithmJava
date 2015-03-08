@@ -92,7 +92,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="valueTypeLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Select Value Types:"/>
+            <Property name="text" type="java.lang.String" value="Select Variable Types:"/>
           </Properties>
         </Component>
       </SubComponents>
