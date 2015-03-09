@@ -501,8 +501,8 @@ public class Driver {
                             }
                         }
                     }
-
-                    System.out.println("\n  Best values found on iteration " + (iteration + 1) + ": " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+                    System.out.println("\n  Best fitness found on iteration " + (iteration + 1) + ": " + Double.toString(chromArray.get(bestIndex).fitness));
+                    System.out.println("  The corresponding variable values for this fitness are: " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
                 }
             }
         }
