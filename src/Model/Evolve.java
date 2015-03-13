@@ -314,7 +314,7 @@ public class Evolve {
                 System.out.println("\n  Sister will consist of: ");
                 System.out.println("  Father, Fragment 1: " + Arrays.toString(parentBSegmentA));
                 System.out.println("  Mother, Fragment 2: " + Arrays.toString(parentASegmentB));
-                System.out.println("  ------------------------------------------------------------------");
+                System.out.println("\n  ------------------------------------------------------------------");
 
                 childA = recombine(parentASegmentA, parentBSegmentB);
                 childB = recombine(parentBSegmentA, parentASegmentB);

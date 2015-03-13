@@ -64,7 +64,6 @@ public class DiscreteTypes extends javax.swing.JFrame {
         controlPanel = new javax.swing.JPanel();
         runButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
-        frModeBut = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         mainMenuBut = new javax.swing.JMenuItem();
@@ -79,6 +78,12 @@ public class DiscreteTypes extends javax.swing.JFrame {
         mutationMenu = new javax.swing.JMenu();
         staticMutBut = new javax.swing.JRadioButtonMenuItem();
         dynamicMutBut = new javax.swing.JRadioButtonMenuItem();
+        resultsMenu = new javax.swing.JMenu();
+        chromPrinBut = new javax.swing.JCheckBoxMenuItem();
+        popPrinBut = new javax.swing.JCheckBoxMenuItem();
+        crossPrinBut = new javax.swing.JCheckBoxMenuItem();
+        rankPrinBut = new javax.swing.JCheckBoxMenuItem();
+        mutPrinBut = new javax.swing.JCheckBoxMenuItem();
 
         tourneySizeDialog.setIconImage(null);
         tourneySizeDialog.setMinimumSize(new java.awt.Dimension(350, 90));
@@ -369,33 +374,25 @@ public class DiscreteTypes extends javax.swing.JFrame {
             }
         });
 
-        frModeBut.setText("Full Results Output");
-
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(runButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(frModeBut)
+                .addContainerGap()
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addComponent(runButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(runButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(clearButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(frModeBut)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         fileMenu.setText("Menu");
@@ -480,6 +477,25 @@ public class DiscreteTypes extends javax.swing.JFrame {
         mutationMenu.add(dynamicMutBut);
 
         jMenuBar1.add(mutationMenu);
+
+        resultsMenu.setText("Results");
+
+        chromPrinBut.setText("Show Chromosome Statistics");
+        resultsMenu.add(chromPrinBut);
+
+        popPrinBut.setText("Print Population Statistics");
+        resultsMenu.add(popPrinBut);
+
+        crossPrinBut.setText("Show Crossover Process");
+        resultsMenu.add(crossPrinBut);
+
+        rankPrinBut.setText("Show Ranking Process");
+        resultsMenu.add(rankPrinBut);
+
+        mutPrinBut.setText("Show Mutation Statistics");
+        resultsMenu.add(mutPrinBut);
+
+        jMenuBar1.add(resultsMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -592,16 +608,37 @@ public class DiscreteTypes extends javax.swing.JFrame {
         }
         return optimisation;
     }
-    
-    //Method to get the full results button's state.
-    public static boolean isFullResultsSelected() {
-        return frModeBut.isSelected();
-    }
-  
+      
     //Method to get the dynamic mutation button's state.
     public static boolean isDynamicMutationSelected() {
         return dynamicMutBut.isSelected();
     }
+    
+    //Method to get the chromosome information print button's state.
+    public static boolean isChromPrinButSelected() {
+        return chromPrinBut.isSelected();
+    }
+    
+    //Method to get the evaluation information print button's state.
+    public static boolean isEvalPrinButSelected() {
+        return popPrinBut.isSelected();
+    }
+    
+    //Method to get the evolution information print button's state.
+    public static boolean isEvolPrinButSelected() {
+        return crossPrinBut.isSelected();
+    }
+    
+    //Method to get the ranking information print button's state.
+    public static boolean isRankPrinButSelected() {
+        return rankPrinBut.isSelected();
+    }
+    
+    //Method to get the mutation information print button's state.
+    public static boolean isMutPrinButSelected() {
+        return mutPrinBut.isSelected();
+    }
+    
     
     //Method that is performed once the run button is clicked. Bulk of the GA.
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
@@ -680,15 +717,16 @@ public class DiscreteTypes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel chromLabel;
+    private static javax.swing.JCheckBoxMenuItem chromPrinBut;
     private javax.swing.JButton clearButton;
     private javax.swing.JPanel controlPanel;
+    private static javax.swing.JCheckBoxMenuItem crossPrinBut;
     private javax.swing.JLabel cutsLabel;
     private static javax.swing.JRadioButtonMenuItem dynamicMutBut;
     private javax.swing.JMenuItem exitBut;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JLabel fitThreshLabel;
     private static javax.swing.JSpinner fitnessThreshold;
-    private static javax.swing.JCheckBox frModeBut;
     private javax.swing.ButtonGroup funcButs;
     private javax.swing.JMenu funcMenu;
     private javax.swing.JLabel itLabel;
@@ -703,6 +741,7 @@ public class DiscreteTypes extends javax.swing.JFrame {
     private static javax.swing.JRadioButtonMenuItem minimiseBut;
     private javax.swing.ButtonGroup mutButs;
     private javax.swing.JPanel mutPanel;
+    private static javax.swing.JCheckBoxMenuItem mutPrinBut;
     private javax.swing.JDialog mutationDialog;
     private javax.swing.JMenu mutationMenu;
     private javax.swing.JButton mutationOkBut;
@@ -712,10 +751,13 @@ public class DiscreteTypes extends javax.swing.JFrame {
     private static javax.swing.JSpinner numVarsSp;
     private javax.swing.JScrollPane outputPanel;
     private javax.swing.JTextArea outputWindow;
+    private static javax.swing.JCheckBoxMenuItem popPrinBut;
     private static javax.swing.JSlider prMutRateBut;
     private javax.swing.JLabel prmrLab;
     private javax.swing.ButtonGroup rankButs;
+    private static javax.swing.JCheckBoxMenuItem rankPrinBut;
     private javax.swing.JMenu rankingMenu;
+    private javax.swing.JMenu resultsMenu;
     private static javax.swing.JRadioButtonMenuItem rouletteRankingBut;
     private javax.swing.JButton runButton;
     private static javax.swing.JSlider seMutRateBut;
