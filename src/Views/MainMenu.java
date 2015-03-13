@@ -9,7 +9,7 @@ public class MainMenu extends javax.swing.JFrame {
     //Constructor method. Initialises the interface and sets the program icon.
     public MainMenu() {
         initComponents();
-        this.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna_helix.png")).getImage());  
+        this.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna.png")).getImage());  
     }
 
     //Method to build the interface.

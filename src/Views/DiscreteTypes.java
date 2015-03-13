@@ -20,7 +20,7 @@ public class DiscreteTypes extends javax.swing.JFrame {
         PrintStream printStream = new PrintStream(new GUIOutput(outputWindow));
         System.setOut(printStream);
         System.setErr(printStream);
-        this.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna_helix.png")).getImage());  
+        this.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna.png")).getImage());  
     }
 
     //Method to build the interface.
