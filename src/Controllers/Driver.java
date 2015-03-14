@@ -27,7 +27,8 @@ public class Driver {
     public static int prMutRate;
     public static int seMutRate;
     public static int tourneySize;
-    public static int fitnessThreshold;    
+    public static int fitnessThreshold;   
+    public static int runThresh;
     static boolean rouletteFlag;
     static boolean tournamentFlag;
     static boolean minFlag;
@@ -38,6 +39,7 @@ public class Driver {
     static boolean evolPrinFlag;
     static boolean rankPrinFlag;
     static boolean mutPrinFlag;
+    static boolean runUntilFlag;
     
     public static MainMenu menu;
     
@@ -65,7 +67,6 @@ public class Driver {
     
     public static void runBitStrings() {
         //Setting class variables as the values entered on the DiscreteTypes.
-        numIts = DiscreteTypes.getNumIts();
         chromNum = DiscreteTypes.getChromNum();
         varNum = DiscreteTypes.getVarNum();
         lowerBound = DiscreteTypes.getLowerBound();
@@ -81,6 +82,14 @@ public class Driver {
         evolPrinFlag = DiscreteTypes.isEvolPrinButSelected();
         rankPrinFlag = DiscreteTypes.isRankPrinButSelected();
         mutPrinFlag = DiscreteTypes.isMutPrinButSelected();
+        runUntilFlag = DiscreteTypes.isRunUntilButSelected();
+        runThresh = DiscreteTypes.getRunUntilThresh();
+        
+        if(runUntilFlag) {
+            numIts = 1;
+        } else {
+            numIts = DiscreteTypes.getNumIts();
+        }
                 
         //Setting the mutation changed flag.
         boolean mutChanged = false;
@@ -155,9 +164,11 @@ public class Driver {
                 }
             }
 
-            for(int iteration = 0; iteration < numIts; iteration++) {
+            int counter = 1;
+            int iteration = 0;
+            while(iteration < numIts) {
                 
-                System.out.println("\n  Iteration " + (iteration + 1) + ":");
+                System.out.println("\n  Iteration " + counter + ":");
                 if((chromPrinFlag) && (iteration != 0)) {
                     for(int i = 0; i < chromArray.size(); i++) {
                         System.out.println("\n  Chromosome " + (i + 1) + ": ");
@@ -258,7 +269,19 @@ public class Driver {
                     }
                 }
                 
-                System.out.println("\n  Best values found on iteration " + (iteration + 1) + ": " + Arrays.toString(chromArray.get(bestIndex).bitStringValues) + "\n");
+                System.out.println("\n  Best values found on iteration " + counter + ": " + Arrays.toString(chromArray.get(bestIndex).bitStringValues) + "\n");
+                if(!runUntilFlag) {
+                iteration++;
+                counter++;
+                } else {
+                    counter++;
+                    if(bestFit <= runThresh) {
+                        System.out.println("\n  Threshold has been reached, programme terminated.");
+                        System.out.println("  Final fitness is: " + bestFit);
+                        System.out.println("  Values for variables are: " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+                        break;
+                    }
+                }
             }               
         } 
         
@@ -305,9 +328,11 @@ public class Driver {
                 }
             }
 
-            for(int iteration = 0; iteration < numIts; iteration++) {
+            int counter = 1;
+            int iteration = 0;
+            while(iteration < numIts) {
 
-                System.out.println("\n  Iteration " + (iteration + 1) + ":");
+                System.out.println("\n  Iteration " + counter + ":");
                 if((chromPrinFlag) && (iteration != 0)) {
                     for(int i = 0; i < chromArray.size(); i++) {
                         System.out.println("\n  Chromosome " + (i + 1) + ": ");
@@ -410,7 +435,19 @@ public class Driver {
                     }
                 }
                 
-            System.out.println("\n  Best values found on iteration " + (iteration + 1) + ": " + Arrays.toString(chromArray.get(bestIndex).bitStringValues) + "\n");
+                System.out.println("\n  Best values found on iteration " + counter + ": " + Arrays.toString(chromArray.get(bestIndex).bitStringValues) + "\n");
+                if(!runUntilFlag) {
+                iteration++;
+                counter++;
+                } else {
+                    counter++;
+                    if(bestFit >= runThresh) {
+                        System.out.println("\n  Threshold has been reached, programme terminated.");
+                        System.out.println("  Final fitness is: " + bestFit);
+                        System.out.println("  Values for variables are: " + Arrays.toString(chromArray.get(bestIndex).bitStringValues));
+                        break;
+                    }
+                }
             }
         }
     }

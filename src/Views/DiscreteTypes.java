@@ -42,6 +42,10 @@ public class DiscreteTypes extends javax.swing.JFrame {
         mutationOkBut = new javax.swing.JButton();
         fitnessThreshold = new javax.swing.JSpinner();
         fitThreshLabel = new javax.swing.JLabel();
+        runUntilDialog = new javax.swing.JDialog();
+        runUntilLabel = new javax.swing.JLabel();
+        runUntilThreshold = new javax.swing.JSpinner();
+        runUntilOKBut = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         variablePanel = new javax.swing.JPanel();
         lowerBoundLabel = new javax.swing.JLabel();
@@ -84,6 +88,7 @@ public class DiscreteTypes extends javax.swing.JFrame {
         crossPrinBut = new javax.swing.JCheckBoxMenuItem();
         rankPrinBut = new javax.swing.JCheckBoxMenuItem();
         mutPrinBut = new javax.swing.JCheckBoxMenuItem();
+        runUntilBut = new javax.swing.JCheckBoxMenuItem();
 
         tourneySizeDialog.setIconImage(null);
         tourneySizeDialog.setMinimumSize(new java.awt.Dimension(350, 90));
@@ -201,6 +206,45 @@ public class DiscreteTypes extends javax.swing.JFrame {
                     .addComponent(fitThreshLabel)
                     .addComponent(fitnessThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mutationOkBut))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        runUntilDialog.setMinimumSize(new java.awt.Dimension(220, 115));
+
+        runUntilLabel.setText("Threshold Fitness: ");
+
+        runUntilOKBut.setText("OK");
+        runUntilOKBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runUntilOKButActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout runUntilDialogLayout = new javax.swing.GroupLayout(runUntilDialog.getContentPane());
+        runUntilDialog.getContentPane().setLayout(runUntilDialogLayout);
+        runUntilDialogLayout.setHorizontalGroup(
+            runUntilDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(runUntilDialogLayout.createSequentialGroup()
+                .addGroup(runUntilDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(runUntilDialogLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(runUntilLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(runUntilThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(runUntilDialogLayout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(runUntilOKBut)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        runUntilDialogLayout.setVerticalGroup(
+            runUntilDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(runUntilDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(runUntilDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(runUntilLabel)
+                    .addComponent(runUntilThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(runUntilOKBut)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -495,6 +539,14 @@ public class DiscreteTypes extends javax.swing.JFrame {
         mutPrinBut.setText("Show Mutation Statistics");
         resultsMenu.add(mutPrinBut);
 
+        runUntilBut.setText("Run Until Threshold Fitness");
+        runUntilBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runUntilButActionPerformed(evt);
+            }
+        });
+        resultsMenu.add(runUntilBut);
+
         jMenuBar1.add(resultsMenu);
 
         setJMenuBar(jMenuBar1);
@@ -639,6 +691,14 @@ public class DiscreteTypes extends javax.swing.JFrame {
         return mutPrinBut.isSelected();
     }
     
+    public static boolean isRunUntilButSelected() {
+        return runUntilBut.isSelected();
+    }
+    
+    public static int getRunUntilThresh() {
+        return (Integer)runUntilThreshold.getValue(); 
+    }
+    
     
     //Method that is performed once the run button is clicked. Bulk of the GA.
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
@@ -711,9 +771,27 @@ public class DiscreteTypes extends javax.swing.JFrame {
 
     private void dynamicMutButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dynamicMutButActionPerformed
         mutationDialog.setLocationRelativeTo(null);
-        mutationDialog.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna_helix.png")).getImage()); 
+        mutationDialog.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna.png")).getImage()); 
         mutationDialog.setVisible(true);
     }//GEN-LAST:event_dynamicMutButActionPerformed
+
+    private void runUntilButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runUntilButActionPerformed
+        if(runUntilBut.isSelected()) {
+            numItsSp.setEnabled(false);
+            itLabel.setEnabled(false);
+            runUntilDialog.setLocationRelativeTo(null);
+            runUntilDialog.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna.png")).getImage()); 
+            runUntilDialog.setVisible(true); 
+        } else if(!runUntilBut.isSelected()) {
+            numItsSp.setEnabled(true);
+            itLabel.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_runUntilButActionPerformed
+
+    private void runUntilOKButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runUntilOKButActionPerformed
+        runUntilDialog.setVisible(false);
+    }//GEN-LAST:event_runUntilOKButActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel chromLabel;
@@ -760,6 +838,11 @@ public class DiscreteTypes extends javax.swing.JFrame {
     private javax.swing.JMenu resultsMenu;
     private static javax.swing.JRadioButtonMenuItem rouletteRankingBut;
     private javax.swing.JButton runButton;
+    private static javax.swing.JCheckBoxMenuItem runUntilBut;
+    private javax.swing.JDialog runUntilDialog;
+    private javax.swing.JLabel runUntilLabel;
+    private javax.swing.JButton runUntilOKBut;
+    private static javax.swing.JSpinner runUntilThreshold;
     private static javax.swing.JSlider seMutRateBut;
     private javax.swing.JLabel semrLab;
     private javax.swing.JLabel semrLabel1;
