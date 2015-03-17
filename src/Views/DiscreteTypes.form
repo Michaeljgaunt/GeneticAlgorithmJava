@@ -412,8 +412,11 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="popPrinBut">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Print Population Statistics"/>
+                <Property name="text" type="java.lang.String" value="Show Population Statistics"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="popPrinButActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
               </AuxValues>
@@ -763,10 +766,12 @@
         <Component class="javax.swing.JTextArea" name="outputWindow">
           <Properties>
             <Property name="columns" type="int" value="20"/>
-            <Property name="rows" type="int" value="5"/>
+            <Property name="rows" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="5" type="code"/>
+            </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="outputWindow.setText(&quot;\n  This program uses a genetic algorithm to maximise an objective function.&quot;&#xa;+ &quot;\n  Use the above controls to fine tune how you want the algorithm to perform.&quot;&#xa;+ &quot;\n&quot;&#xa;+ &quot;\n  Set the lower bound and upper bound to define the range in which you want the generated variables &quot;&#xa;+ &quot;\n  to be within. The higher your upper bound, the more chromosomes you should set to ensure a good &quot;&#xa;+ &quot;\n  variety of values. As the range increases, the number of iterations should also be increased.&quot;&#xa;+ &quot;\n  As the upper bound increases, the number of cuts should be reasonably raised.&quot;&#xa;+ &quot;\n&quot;&#xa;+ &quot;\n  Roulette ranking ranks the chromosomes based on weighted probabilites.&quot;&#xa;+ &quot;\n  Tournament ranking ranks chromosomes based on the &apos;best&apos; in a tournament setting.&quot;&#xa;+ &quot;\n  To have no ranking in effect, select tournament ranking with a size of 1. This will&quot;&#xa;+ &quot;\n  pick chromosomes at random.&quot;&#xa;+ &quot;\n&quot;&#xa;+ &quot;\n  A high mutation rate means a greater range of values will be &apos;explored&apos;.&quot;&#xa;+ &quot;\n  A low mutation rate means a smaller range of values will be &apos;explored&apos;,&quot;&#xa;+ &quot;\n  but the range of values that is explored will be more thoroughly &apos;exploited&apos;&quot;&#xa;+ &quot;\n  Engage dynamic mode to lower (or raise) the mutation rate to the secondary&quot;&#xa;+ &quot;\n  value when a chromosome exceeds the threshold fitness value.&quot;&#xa;+ &quot;\n&quot;&#xa;+ &quot;\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="outputWindow.setText(&quot;\n  This program uses a genetic algorithm to maximise an objective function.&quot;&#xa;+ &quot;\n  Use the above controls to fine tune how you want the algorithm to perform.&quot;&#xa;+ &quot;\n&quot;&#xa;+ &quot;\n  Set the lower bound and upper bound to define the range in which you want&quot;&#xa;+ &quot;\n  to generate variables. The higher your upper bound, the more chromosomes&quot;&#xa;+ &quot;\n  you should set to ensure a good variety of values. As the range increases&quot;&#xa;+ &quot;\n  the number of iterations should also be increased. As the upper bound &quot;&#xa;+ &quot;\n  increases, the number of cuts should be reasonably raised.&quot;&#xa;+ &quot;\n&quot;&#xa;+ &quot;\n  Roulette ranking ranks the chromosomes based on weighted probabilites.&quot;&#xa;+ &quot;\n  Tournament ranking ranks chromosomes based on the &apos;best&apos; in a tournament &quot;&#xa;+ &quot;\n  setting. To have no ranking in effect, select tournament ranking with a &quot;&#xa;+ &quot;\n  size of 1. This will pick chromosomes at random. Note that roulette&quot;&#xa;+ &quot;\n  ranking cannot be used for minimising functions.&quot;&#xa;+ &quot;\n&quot;&#xa;+ &quot;\n  A high mutation rate means a greater range of values will be &apos;explored&apos;.&quot;&#xa;+ &quot;\n  A low mutation rate means a smaller range of values will be &apos;explored&apos;,&quot;&#xa;+ &quot;\n  but the range of values that is explored will be more thoroughly &quot;&#xa;+ &quot;\n  &apos;exploited&apos;. Use dynamic mode to lower (or raise) the mutation rate to &quot;&#xa;+ &quot;\n  a new value when a chromosome exceeds the threshold fitness value.&quot;&#xa;+ &quot;\n&quot;);"/>
           </AuxValues>
         </Component>
       </SubComponents>

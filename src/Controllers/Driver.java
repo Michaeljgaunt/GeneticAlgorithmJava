@@ -142,34 +142,21 @@ public class Driver {
             System.out.println("  Evaluating chromosomes...");
             
             //Generating chromosomes and setting chromosomal attributes.
-            if(chromPrinFlag) {
-                for(int i = 0; i < chromNum; i++) {
-                    System.out.println("\n  Chromosome " + (i + 1) + ": ");
-                    Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                    c.generateBitString(random);
-                    System.out.println("  " + Arrays.toString(c.chromosome));
-                    c.convertBitString();
-                    System.out.println("  Values: " + Arrays.toString(c.bitStringValues));
-                    c.evaluateFitness(objfunc);
-                    System.out.println("  Fitness: " + c.fitness);
-                    chromArray.add(c);
-                }
-            } else {
-                for(int i = 0; i < chromNum; i++) {
-                    Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                    c.generateBitString(random);
-                    c.convertBitString();
-                    c.evaluateFitness(objfunc);
-                    chromArray.add(c);
-                }
+            for(int i = 0; i < chromNum; i++) {
+                Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
+                c.generateBitString(random);
+                c.convertBitString();
+                c.evaluateFitness(objfunc);
+                chromArray.add(c);
             }
+            
 
             int counter = 1;
             int iteration = 0;
             while(iteration < numIts) {
                 
                 System.out.println("\n  Iteration " + counter + ":");
-                if((chromPrinFlag) && (iteration != 0)) {
+                if(chromPrinFlag) {
                     for(int i = 0; i < chromArray.size(); i++) {
                         System.out.println("\n  Chromosome " + (i + 1) + ": ");
                         System.out.println("  " + Arrays.toString(chromArray.get(i).chromosome));
@@ -306,26 +293,12 @@ public class Driver {
             System.out.println("  Evaluating chromosomes...");
             
             //Generating chromosomes and setting chromosomal attributes.
-            if(chromPrinFlag) {
-                for(int i = 0; i < chromNum; i++) {
-                    System.out.println("\n  Chromosome " + (i + 1) + ": ");
-                    Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                    c.generateBitString(random);
-                    System.out.println("  " + Arrays.toString(c.chromosome));
-                    c.convertBitString();
-                    System.out.println("  Values: " + Arrays.toString(c.bitStringValues));
-                    c.evaluateFitness(objfunc);
-                    System.out.println("  Fitness: " + c.fitness);
-                    chromArray.add(c);
-                }
-            } else {
-                for(int i = 0; i < chromNum; i++) {
-                    Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                    c.generateBitString(random);
-                    c.convertBitString();
-                    c.evaluateFitness(objfunc);
-                    chromArray.add(c);
-                }
+            for(int i = 0; i < chromNum; i++) {
+                Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
+                c.generateBitString(random);
+                c.convertBitString();
+                c.evaluateFitness(objfunc);
+                chromArray.add(c);
             }
 
             int counter = 1;
@@ -333,7 +306,7 @@ public class Driver {
             while(iteration < numIts) {
 
                 System.out.println("\n  Iteration " + counter + ":");
-                if((chromPrinFlag) && (iteration != 0)) {
+                if(chromPrinFlag) {
                     for(int i = 0; i < chromArray.size(); i++) {
                         System.out.println("\n  Chromosome " + (i + 1) + ": ");
                         System.out.println("  " + Arrays.toString(chromArray.get(i).chromosome));

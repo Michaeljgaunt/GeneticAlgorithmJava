@@ -383,23 +383,24 @@ public class DiscreteTypes extends javax.swing.JFrame {
         outputWindow.setText("\n  This program uses a genetic algorithm to maximise an objective function."
             + "\n  Use the above controls to fine tune how you want the algorithm to perform."
             + "\n"
-            + "\n  Set the lower bound and upper bound to define the range in which you want the generated variables "
-            + "\n  to be within. The higher your upper bound, the more chromosomes you should set to ensure a good "
-            + "\n  variety of values. As the range increases, the number of iterations should also be increased."
-            + "\n  As the upper bound increases, the number of cuts should be reasonably raised."
+            + "\n  Set the lower bound and upper bound to define the range in which you want"
+            + "\n  to generate variables. The higher your upper bound, the more chromosomes"
+            + "\n  you should set to ensure a good variety of values. As the range increases"
+            + "\n  the number of iterations should also be increased. As the upper bound "
+            + "\n  increases, the number of cuts should be reasonably raised."
             + "\n"
             + "\n  Roulette ranking ranks the chromosomes based on weighted probabilites."
-            + "\n  Tournament ranking ranks chromosomes based on the 'best' in a tournament setting."
-            + "\n  To have no ranking in effect, select tournament ranking with a size of 1. This will"
-            + "\n  pick chromosomes at random."
+            + "\n  Tournament ranking ranks chromosomes based on the 'best' in a tournament "
+            + "\n  setting. To have no ranking in effect, select tournament ranking with a "
+            + "\n  size of 1. This will pick chromosomes at random. Note that roulette"
+            + "\n  ranking cannot be used for minimising functions."
             + "\n"
             + "\n  A high mutation rate means a greater range of values will be 'explored'."
             + "\n  A low mutation rate means a smaller range of values will be 'explored',"
-            + "\n  but the range of values that is explored will be more thoroughly 'exploited'"
-            + "\n  Engage dynamic mode to lower (or raise) the mutation rate to the secondary"
-            + "\n  value when a chromosome exceeds the threshold fitness value."
-            + "\n"
-            + "\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+            + "\n  but the range of values that is explored will be more thoroughly "
+            + "\n  'exploited'. Use dynamic mode to lower (or raise) the mutation rate to "
+            + "\n  a new value when a chromosome exceeds the threshold fitness value."
+            + "\n");
         outputPanel.setViewportView(outputWindow);
 
         controlPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "  Controls  ", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
@@ -527,7 +528,12 @@ public class DiscreteTypes extends javax.swing.JFrame {
         chromPrinBut.setText("Show Chromosome Statistics");
         resultsMenu.add(chromPrinBut);
 
-        popPrinBut.setText("Print Population Statistics");
+        popPrinBut.setText("Show Population Statistics");
+        popPrinBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popPrinButActionPerformed(evt);
+            }
+        });
         resultsMenu.add(popPrinBut);
 
         crossPrinBut.setText("Show Crossover Process");
@@ -792,6 +798,10 @@ public class DiscreteTypes extends javax.swing.JFrame {
     private void runUntilOKButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runUntilOKButActionPerformed
         runUntilDialog.setVisible(false);
     }//GEN-LAST:event_runUntilOKButActionPerformed
+
+    private void popPrinButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popPrinButActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_popPrinButActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel chromLabel;
