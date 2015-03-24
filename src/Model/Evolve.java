@@ -240,7 +240,7 @@ public class Evolve {
         childArray = new ArrayList<>(parentArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-            c.generateBitString(random);
+            c.generateBitStringInt(random);
             childArray.add(c);
         }
         int numChromPairs = parentArray.size() / 2;
@@ -281,7 +281,7 @@ public class Evolve {
         childArray = new ArrayList<>(parentArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-            c.generateBitString(random);
+            c.generateBitStringInt(random);
             childArray.add(c);
         }
         int numChromPairs = parentArray.size() / 2;

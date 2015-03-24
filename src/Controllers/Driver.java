@@ -144,8 +144,8 @@ public class Driver {
             //Generating chromosomes and setting chromosomal attributes.
             for(int i = 0; i < chromNum; i++) {
                 Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                c.generateBitString(random);
-                c.convertBitString();
+                c.generateBitStringInt(random);
+                c.convertBitStringInt();
                 c.evaluateFitness(objfunc);
                 chromArray.add(c);
             }
@@ -229,7 +229,7 @@ public class Driver {
 
                 System.out.println("\n  Evaluating chromosomes...");
                 for(int i = 0; i < chromNum; i++) {
-                    chromArray.get(i).convertBitString();
+                    chromArray.get(convertBitStringInt());
                     chromArray.get(i).evaluateFitness(objfunc);
                 }
 
@@ -295,8 +295,8 @@ public class Driver {
             //Generating chromosomes and setting chromosomal attributes.
             for(int i = 0; i < chromNum; i++) {
                 Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                c.generateBitString(random);
-                c.convertBitString();
+               generateBitStringInting(random);
+            convertBitStringIntString();
                 c.evaluateFitness(objfunc);
                 chromArray.add(c);
             }
@@ -384,7 +384,7 @@ public class Driver {
 
                 System.out.println("\n  Evaluating chromosomes...");
                 for(int i = 0; i < chromNum; i++) {
-                    chromArray.get(i).convertBitString();
+                    chromArraconvertBitStringIntBitString();
                     chromArray.get(i).evaluateFitness(objfunc);
                 }
                 

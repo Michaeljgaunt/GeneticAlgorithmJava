@@ -33,7 +33,7 @@ public class Chromosome {
     }
     
     //Method to randomly generate a bitstring.
-    public void generateBitString(Random random) {
+    public void generateBitStringInt(Random random) {
         
        bitStringLength = (int)(Math.ceil(Math.log(upperBound) / Math.log(2)));
        int chromLen = bitStringLength * numVars;
@@ -48,9 +48,24 @@ public class Chromosome {
            }  
        }
     }
+    
+    public void generateBitStringDecimal(Random random) {
+        
+        int  chromLen = 64 * numVars;
+        chromosome = new int[chromLen];
+        
+        for(int i = 0; i < chromLen; i++) {
+            int randomNum = random.nextInt(10) + 1;
+            if(randomNum <= 5) {
+               chromosome[i] = 0;
+           } else {
+               chromosome[i] = 1;
+           }  
+        }
+    }
        
     //Method to convert the bitstring to its decimal value.
-    public void convertBitString() {
+    public void convertBitStringInt() {
         
         bitStringValues = new double[numVars];
         int val = 0, power = 0;
@@ -65,6 +80,35 @@ public class Chromosome {
             bitStringValues[i] = squeezedVal;
             power = 0;
             val = 0;
+        }
+    }
+    
+    public void convertBitStrindDecimal() {
+        bitStringValues = new double[numVars];
+        double fract = 0, exp = 0, power = 0, val = 0, squeezedVal = 0;
+        
+        for(int i = 0; i <numVars; i++) {
+            
+            for(int j = ((i + 1) * (i + 51)); j > (63 * i); j-- ) {
+                fract += (chromosome[j - 1] * Math.pow(2, (power * -1)));
+                power++;
+            }
+            
+            power = 0;
+            
+            for(int j = (61 * i); j > (51 * i); j--) {
+                exp += (chromosome[j - 1] * Math.pow(2, power));
+                power++;
+            }
+            
+            if(chromosome[62 * i] == 0) {
+                exp *= -1;
+            }
+            
+            val = (Math.pow(-1, chromosome[63 * i])) * (1 + fract) * (Math.pow(2, (exp - 1023)));
+            squeezedVal = (lowerBound + (((upperBound - lowerBound) / (Math.pow(2, (chromosome.length / numVars)) - 1)) * val));
+            bitStringValues[i] = squeezedVal;
+            power = 0; val = 0; squeezedVal = 0; fract = 0; exp = 0;
         }
     }
     
