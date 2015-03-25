@@ -9,7 +9,7 @@ public class ObjectiveFunction {
 
     //A method containing the objective function. Returns the result. The default
     //objective function is De Jong's 5th function which should have bounds of 
-    // -66 - 66.
+    // -66 - +66.
     public double ObjectiveFunction(double[] variables) {
         double answer = 0.002;
         for(int i = 1; i <= 25; i++) {

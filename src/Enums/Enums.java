@@ -1,3 +1,6 @@
+/*
+ * Class to define all enums needed for GA.
+ */
 
 package Enums;
 

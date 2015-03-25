@@ -23,6 +23,7 @@ public class Chromosome {
     public double[] bitStringValues;        
     
     public double fitness;
+    public Random random;
     
     //Constructor, takes in the range of values and number of variables.
     public Chromosome(int lowerBound, int upperBound, int numVars) {
@@ -30,10 +31,11 @@ public class Chromosome {
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         this.numVars = numVars;
+        random = new Random();
     }
     
     //Method to randomly generate a bitstring.
-    public void generateBitStringInt(Random random) {
+    public void generateBitStringInt() {
         
        bitStringLength = (int)(Math.ceil(Math.log(upperBound) / Math.log(2)));
        int chromLen = bitStringLength * numVars;
@@ -49,7 +51,7 @@ public class Chromosome {
        }
     }
     
-    public void generateBitStringDecimal(Random random) {
+    public void generateBitStringDecimal() {
         
         int  chromLen = 64 * numVars;
         chromosome = new int[chromLen];
@@ -69,7 +71,7 @@ public class Chromosome {
         
         bitStringValues = new double[numVars];
         int val = 0, power = 0;
-        double squeezedVal = 0;
+        double squeezedVal;
         
         for(int i = 0; i < numVars; i++) {
             for(int j = (bitStringLength * (i + 1)); j > (bitStringLength * i); j--) {
@@ -85,7 +87,7 @@ public class Chromosome {
     
     public void convertBitStrindDecimal() {
         bitStringValues = new double[numVars];
-        double fract = 0, exp = 0, power = 0, val = 0, squeezedVal = 0;
+        double fract = 0, exp = 0, power = 0, val, squeezedVal;
         
         for(int i = 0; i <numVars; i++) {
             
@@ -108,7 +110,7 @@ public class Chromosome {
             val = (Math.pow(-1, chromosome[63 * i])) * (1 + fract) * (Math.pow(2, (exp - 1023)));
             squeezedVal = (lowerBound + (((upperBound - lowerBound) / (Math.pow(2, (chromosome.length / numVars)) - 1)) * val));
             bitStringValues[i] = squeezedVal;
-            power = 0; val = 0; squeezedVal = 0; fract = 0; exp = 0;
+            power = 0; fract = 0; exp = 0;
         }
     }
     
@@ -118,7 +120,7 @@ public class Chromosome {
     }
     
     //Method to mutate the chromosome by a given mutation rate.
-    public void mutate(int mutRate, Random random) {
+    public void mutate(int mutRate) {
         
         for(int i = 0; i < chromosome.length; i++) {
            int randomNum = random.nextInt(100) + 1;
@@ -130,7 +132,7 @@ public class Chromosome {
     
     //Slightly different mutate method that contains descriptive print statements for the 
     //"full results mode" option.
-    public void mutateFR(int mutRate, Random random) {
+    public void mutateFR(int mutRate) {
         int mutCounter = 0;
         for(int i = 0; i < chromosome.length; i++) {
            int randomNum = random.nextInt(100) + 1;

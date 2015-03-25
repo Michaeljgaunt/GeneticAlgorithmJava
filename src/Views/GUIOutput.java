@@ -1,5 +1,5 @@
 /*
- * The GUIOutput class reassigns System.out to swing text areas.
+ * The GUIOutput class provides methods to reassign System.out to swing text areas.
  */
 
 package Views;
@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import javax.swing.JTextArea;
 
 public class GUIOutput extends OutputStream {
-    private JTextArea textArea;
+    private final JTextArea textArea;
      
     public GUIOutput(JTextArea textArea) {
         this.textArea = textArea;

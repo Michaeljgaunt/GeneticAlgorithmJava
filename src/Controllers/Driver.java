@@ -12,7 +12,6 @@ import Model.ObjectiveFunction;
 import Views.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class Driver {
     
@@ -78,7 +77,7 @@ public class Driver {
         tourneySize = DiscreteTypes.getTourneySize();
         dynamicMutFlag = DiscreteTypes.isDynamicMutationSelected();
         chromPrinFlag = DiscreteTypes.isChromPrinButSelected();
-        evalPrinFlag = DiscreteTypes.isEvalPrinButSelected();
+        evalPrinFlag = DiscreteTypes.isPopPrinButSelected();
         evolPrinFlag = DiscreteTypes.isEvolPrinButSelected();
         rankPrinFlag = DiscreteTypes.isRankPrinButSelected();
         mutPrinFlag = DiscreteTypes.isMutPrinButSelected();
@@ -124,7 +123,6 @@ public class Driver {
         //Executes if the user selects "minimise"
         if(minFlag) {
 
-            Random random = new Random();
             ObjectiveFunction objfunc = new ObjectiveFunction();
 
             System.out.println("  Minimising objective function.");            
@@ -144,7 +142,7 @@ public class Driver {
             //Generating chromosomes and setting chromosomal attributes.
             for(int i = 0; i < chromNum; i++) {
                 Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                c.generateBitStringInt(random);
+                c.generateBitStringInt();
                 c.convertBitStringInt();
                 c.evaluateFitness(objfunc);
                 chromArray.add(c);
@@ -174,29 +172,29 @@ public class Driver {
                 if(rankPrinFlag) {
                     if(tournamentFlag) {
                         System.out.println("\n  Ranking parents (tournament method, size " + tourneySize + "):");
-                        evolve.tournamentRankMinFR(random, tourneySize);
+                        evolve.tournamentRankMinFR(tourneySize);
                     }
                     System.out.println("\n  Chosen parents: ");
                     for (Chromosome parentArray : evolve.parentArray) {
-                        System.out.println(Arrays.toString(parentArray.chromosome));
+                        System.out.println("  " + Arrays.toString(parentArray.chromosome));
                     }
                 } else {
                     if(tournamentFlag) {
                         System.out.println("\n  Ranking parents (tournament method, size " + tourneySize + ")...");
-                        evolve.tournamentRankMin(random, tourneySize);
+                        evolve.tournamentRankMin(tourneySize);
                     } 
                 }
 
                 //Crossover and mutation of chromosomes.
                 if(evolPrinFlag) {
                     System.out.println("\n  Performing crossover:");
-                    evolve.crossoverFR(random, numCuts, lowerBound, upperBound, varNum);
+                    evolve.crossoverFR(numCuts, lowerBound, upperBound, varNum);
                     for(int i = 0; i < chromNum; i++) {       
                         chromArray = evolve.chromArray;
                     }
                 } else {
                     System.out.println("\n  Performing crossover...");
-                    evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
+                    evolve.crossover(numCuts, lowerBound, upperBound, varNum);
                     for(int i = 0; i < chromNum; i++) {       
                         chromArray = evolve.chromArray;
                     }
@@ -209,7 +207,7 @@ public class Driver {
                         System.out.println("\n  Applying mutation rate of " + prMutRate + "%: ");
                         for(int i = 0; i < chromNum; i++) {
                             System.out.println("\n  Chromosome " + (i + 1) + ": ");
-                            chromArray.get(i).mutateFR(prMutRate, random);
+                            chromArray.get(i).mutateFR(prMutRate);
                         }
                     }
                 } else {
@@ -218,7 +216,7 @@ public class Driver {
                     } else {
                         System.out.println("\n  Applying mutation rate of " + prMutRate + "%...");
                         for(int i = 0; i < chromNum; i++) {
-                            chromArray.get(i).mutate(prMutRate, random);
+                            chromArray.get(i).mutate(prMutRate);
                         }
                     }
                 }
@@ -275,7 +273,6 @@ public class Driver {
         //Executes if the user selects "maximise"
         if(maxFlag) {           
             
-            Random random = new Random();
             ObjectiveFunction objfunc = new ObjectiveFunction();
 
             System.out.println("  Maximising objective function.");            
@@ -295,7 +292,7 @@ public class Driver {
             //Generating chromosomes and setting chromosomal attributes.
             for(int i = 0; i < chromNum; i++) {
                 Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-                c.generateBitStringInt(random);
+                c.generateBitStringInt();
                 c.convertBitStringInt();
                 c.evaluateFitness(objfunc);
                 chromArray.add(c);
@@ -325,35 +322,35 @@ public class Driver {
                 } if(rankPrinFlag) {
                     if(rouletteFlag) {
                         System.out.println("\n  Ranking parents (roulette method):");
-                        evolve.rouletteRankFR(random);
+                        evolve.rouletteRankFR();
                     } else if(tournamentFlag) {
                         System.out.println("\n  Ranking parents (tournament method, size " + tourneySize + "):");
-                        evolve.tournamentRankMaxFR(random, tourneySize);
+                        evolve.tournamentRankMaxFR(tourneySize);
                     }
                     System.out.println("\n  Chosen parents: ");
-                    for(int i = 0; i < evolve.parentArray.size(); i++) {
-                        System.out.println(Arrays.toString(evolve.parentArray.get(i).chromosome));
+                    for (Chromosome c : evolve.parentArray) {
+                        System.out.println("  " + Arrays.toString(c.chromosome));
                     }
                 } else {
                     if(rouletteFlag) {
                         System.out.println("\n  Ranking parents (roulette method)...");
-                        evolve.rouletteRank(random);
+                        evolve.rouletteRank();
                     } else if(tournamentFlag) {
                         System.out.println("\n  Ranking parents (tournament method, size " + tourneySize + ")...");
-                        evolve.tournamentRankMax(random, tourneySize);
+                        evolve.tournamentRankMax(tourneySize);
                     }
                 }
 
                 //Crossover and mutation of chromosomes.
                 if(evolPrinFlag) {
                     System.out.println("\n  Performing crossover:");
-                    evolve.crossoverFR(random, numCuts, lowerBound, upperBound, varNum);
+                    evolve.crossoverFR(numCuts, lowerBound, upperBound, varNum);
                     for(int i = 0; i < chromNum; i++) {       
                         chromArray = evolve.chromArray;
                     }
                 } else {
                     System.out.println("\n  Performing crossover...");
-                    evolve.crossover(random, numCuts, lowerBound, upperBound, varNum);
+                    evolve.crossover(numCuts, lowerBound, upperBound, varNum);
                     for(int i = 0; i < chromNum; i++) {       
                         chromArray = evolve.chromArray;
                     }        
@@ -365,7 +362,7 @@ public class Driver {
                         System.out.println("\n  Applying mutation rate of " + prMutRate + "%:");
                         for(int i = 0; i < chromNum; i++) {
                             System.out.println("\n  Chromosome " + (i + 1) + ": ");
-                            chromArray.get(i).mutateFR(prMutRate, random);
+                            chromArray.get(i).mutateFR(prMutRate);
                         }
                     }
                 } else {
@@ -374,7 +371,7 @@ public class Driver {
                     } else {
                         System.out.println("\n  Applying mutation rate of " + prMutRate + "%...");
                         for(int i = 0; i < chromNum; i++) {
-                            chromArray.get(i).mutate(prMutRate, random);
+                            chromArray.get(i).mutate(prMutRate);
                         }
                     }
                 }
@@ -390,9 +387,9 @@ public class Driver {
                 
 
                 //Finding chromosomes with best fitness.
-                for (int i = 0; i < chromArray.size(); i++) {
-                    if (chromArray.get(i).fitness > bestFit) {
-                        bestFit = chromArray.get(i).fitness;
+                for (Chromosome c : chromArray) {
+                    if (c.fitness > bestFit) {
+                        bestFit = c.fitness;
                     }
                 } 
 

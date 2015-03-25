@@ -18,10 +18,12 @@ public class Evolve {
     public ArrayList<Chromosome> parentArray;
     public int chromLen = 0;
     public ArrayList<Chromosome> childArray;
+    public Random random;
     
     //Constructor, takes in a list of chromosomes.
     public Evolve(ArrayList<Chromosome> chromosomeArray) {
         chromArray = chromosomeArray;
+        random = new Random();
     }
     
     //Method to sum the fitness values of the chromosomes in the list.
@@ -43,15 +45,15 @@ public class Evolve {
     }
     
     //Method to rank chromosomes using the roulette method.
-    public void rouletteRank(Random random) {
+    public void rouletteRank() {
         float randomNum = random.nextFloat();
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             if(parentArray.isEmpty()) {
                 double bestProb = 0;
-                for(int j = 0; j < probArray.size(); j++) {
-                    if(probArray.get(j) > bestProb)  {
-                        bestProb = probArray.get(j);
+                for (Double currProb : probArray) {
+                    if (currProb > bestProb) {
+                        bestProb = currProb;
                     }  
                 }
                 int bestIndex = probArray.indexOf(bestProb);
@@ -62,7 +64,6 @@ public class Evolve {
                     total += probArray.get(k);
                     if(total >= randomNum) {
                         parentArray.add(chromArray.get(k));
-                        total = 0;
                         randomNum = random.nextFloat();
                         break;
                     }
@@ -72,16 +73,16 @@ public class Evolve {
     }
     
     //Roulette ranking method with descripitve print statements for "full results mode"
-    public void rouletteRankFR(Random random) {
+    public void rouletteRankFR() {
         float randomNum = random.nextFloat();
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             System.out.println("\n  Choosing chromosome " + (i + 1) + ": ");
             if(parentArray.isEmpty()) {
                 double bestProb = 0;
-                for(int j = 0; j < probArray.size(); j++) {
-                    if(probArray.get(j) > bestProb)  {
-                        bestProb = probArray.get(j);
+                for (Double currProb : probArray) {
+                    if (currProb > bestProb) {
+                        bestProb = currProb;
                     }  
                 }
                 int bestIndex = probArray.indexOf(bestProb);
@@ -97,7 +98,6 @@ public class Evolve {
                         System.out.println("  Total has exceeded random number, adding in chromosome with index " + k + ":");
                         System.out.println("  " + Arrays.toString(chromArray.get(k).chromosome));
                         parentArray.add(chromArray.get(k));
-                        total = 0;
                         randomNum = random.nextFloat();
                         break;
                     }
@@ -107,7 +107,7 @@ public class Evolve {
     }
     
     //Method to rank chromosomes using the tournament method (for maximising functions).
-    public void tournamentRankMax(Random random, int tourneySize) {
+    public void tournamentRankMax(int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             ArrayList<Chromosome> tournamentArray =  new ArrayList<>(tourneySize);
@@ -116,9 +116,9 @@ public class Evolve {
                 tournamentArray.add(chromArray.get(randomNum));
             }
             double bestFit = 0;
-            for(int j = 0; j < tournamentArray.size(); j++) {
-                if(tournamentArray.get(j).fitness > bestFit)  {
-                    bestFit = tournamentArray.get(j).fitness;
+            for (Chromosome chrom : tournamentArray) {
+                if (chrom.fitness > bestFit) {
+                    bestFit = chrom.fitness;
                 }  
             }
             int bestIndex = 0;
@@ -132,7 +132,7 @@ public class Evolve {
     }
     
     //Tournament ranking method with descripitve print statements for "full results mode"
-    public void tournamentRankMaxFR(Random random, int tourneySize) {
+    public void tournamentRankMaxFR(int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             ArrayList<Chromosome> tournamentArray =  new ArrayList<>(tourneySize);
@@ -149,11 +149,11 @@ public class Evolve {
             }
             double bestFit = 0;
             System.out.println("\n  Fitnesses of tournament participants: ");
-            for(int j = 0; j < tournamentArray.size(); j++) {
-                if(tournamentArray.get(j).fitness > bestFit)  {
-                    bestFit = tournamentArray.get(j).fitness;
-                }  
-                System.out.println("  " + tournamentArray.get(j).fitness);
+            for (Chromosome chrom : tournamentArray) {
+                if (chrom.fitness > bestFit) {
+                    bestFit = chrom.fitness;
+                }
+                System.out.println("  " + chrom.fitness);
             }
             int bestIndex = 0;
             for(int j = 0; j < tournamentArray.size(); j++) {
@@ -168,7 +168,7 @@ public class Evolve {
     }
     
     //Method to rank chromosomes using the tournament method (for minimising functions).
-    public void tournamentRankMin(Random random, int tourneySize) {
+    public void tournamentRankMin(int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             ArrayList<Chromosome> tournamentArray =  new ArrayList<>(tourneySize);
@@ -196,7 +196,7 @@ public class Evolve {
     }
     
     //Tournament ranking method with descripitve print statements for "full results mode"
-    public void tournamentRankMinFR(Random random, int tourneySize) {
+    public void tournamentRankMinFR(int tourneySize) {
         parentArray = new ArrayList<>(chromArray.size());
         for(int i = 0; i < chromArray.size(); i++) {
             ArrayList<Chromosome> tournamentArray =  new ArrayList<>(tourneySize);
@@ -235,12 +235,12 @@ public class Evolve {
     }
     
     //Method for performing crossover of chromosomes.
-    public void crossover(Random random, int numCuts, int lowerBound, int upperBound, int varNum) {
+    public void crossover(int numCuts, int lowerBound, int upperBound, int varNum) {
         chromLen = parentArray.get(0).chromosome.length;
         childArray = new ArrayList<>(parentArray.size());
-        for(int i = 0; i < chromArray.size(); i++) {
+        for (Chromosome chrom : chromArray) {
             Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-            c.generateBitStringInt(random);
+            c.generateBitStringInt();
             childArray.add(c);
         }
         int numChromPairs = parentArray.size() / 2;
@@ -276,12 +276,12 @@ public class Evolve {
     }
     
     //Crossover method with descripitve print statements for "full results mode"
-    public void crossoverFR(Random random, int numCuts, int lowerBound, int upperBound, int varNum) {
+    public void crossoverFR(int numCuts, int lowerBound, int upperBound, int varNum) {
         chromLen = parentArray.get(0).chromosome.length;
         childArray = new ArrayList<>(parentArray.size());
-        for(int i = 0; i < chromArray.size(); i++) {
+        for (Chromosome chrom : chromArray) {
             Chromosome c = new Chromosome(lowerBound, upperBound, varNum);
-            c.generateBitStringInt(random);
+            c.generateBitStringInt();
             childArray.add(c);
         }
         int numChromPairs = parentArray.size() / 2;
@@ -324,8 +324,8 @@ public class Evolve {
             }
         }
         System.out.println("\n  Child chromosomes: ");
-        for(int i = 0; i < childArray.size(); i++) {
-            System.out.println("  " + Arrays.toString(childArray.get(i).chromosome));
+        for (Chromosome chrom : childArray) {
+            System.out.println("  " + Arrays.toString(chrom.chromosome));
         }
         chromArray = childArray;
     }

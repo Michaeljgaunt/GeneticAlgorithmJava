@@ -1,3 +1,7 @@
+/*
+ * The RealTypes class contains the code for building the RealTypes GUI
+ * and for getting the options input by the user.
+ */
 
 package Views;
 
@@ -5,10 +9,13 @@ import static Controllers.Driver.menu;
 
 public class RealTypes extends javax.swing.JFrame {
 
+    //Constructor method. Initializes the interface, redefines the System output
+    //stream to the interface and sets the program's icon.
     public RealTypes() {
         initComponents();
     }
 
+    //Method to build the interface.
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -68,11 +75,13 @@ public class RealTypes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Method that executes when the main menu option is selected.
     private void mainMenuButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuButActionPerformed
         this.setVisible(false);
         menu.setVisible(true);
     }//GEN-LAST:event_mainMenuButActionPerformed
 
+    //Method that executes when the exit option is selected.
     private void exitButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButActionPerformed

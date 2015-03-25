@@ -1,4 +1,9 @@
- 
+/*
+ * The MainMenu class contains code for building the main menu GUI and methods
+ * for getting the states of it's components.
+ */
+
+
 package Views;
 
 import Controllers.Driver;

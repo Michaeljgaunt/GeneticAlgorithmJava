@@ -1,6 +1,6 @@
 /*
- * The DiscreteTypes class contains the bulk of the code that drives the GA and all of the
- * code that defines the interface.
+ * The DiscreteTypes class contains the code for building the DiscreteTypes GUI
+ * and for getting the options input by the user.
  */
 
 package Views;
@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 public class DiscreteTypes extends javax.swing.JFrame {
     
     //Constructor method. Initializes the interface, redefines the System output
-    //to the interface and sets the program's icon.
+    //stream to the interface and sets the program's icon.
     public DiscreteTypes() {
         initComponents();
         PrintStream printStream = new PrintStream(new GUIOutput(outputWindow));
@@ -529,11 +529,6 @@ public class DiscreteTypes extends javax.swing.JFrame {
         resultsMenu.add(chromPrinBut);
 
         popPrinBut.setText("Show Population Statistics");
-        popPrinBut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                popPrinButActionPerformed(evt);
-            }
-        });
         resultsMenu.add(popPrinBut);
 
         crossPrinBut.setText("Show Crossover Process");
@@ -597,55 +592,57 @@ public class DiscreteTypes extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
    
-    //Method to get the number of iterations entered on the DiscreteTypes.
+    //Method to get the number of iterations.
     public static int getNumIts() {
         return (Integer)numItsSp.getValue();
     }
     
-    //Method to get the number of chromosomes entered on the DiscreteTypes.
+    //Method to get the number of chromosomes.
     public static int getChromNum() {
         return (Integer)numChromsSp.getValue();
     }
     
-    //Method to get the number of variables entered on the DiscreteTypes.
+    //Method to get the number of variables.
     public static int getVarNum() {
         return (Integer)numVarsSp.getValue();
     }
     
-    //Method to get the lower bound entered on the DiscreteTypes.
+    //Method to get the lower bound.
     public static int getLowerBound() {
         return (Integer)lowerBoundSp.getValue();
     }
     
-    //Method to get the upper bound entered on the DiscreteTypes.
+    //Method to get the upper bound.
     public static int getUpperBound() {
         return (Integer)upperBoundSp.getValue();
     }
     
-    //Method to get the number of cuts entered on the DiscreteTypes.
+    //Method to get the number of cuts.
     public static int getNumCuts() {
         return (Integer)numCutsSp.getValue();
     }
     
-    //Method to get the mutation rate entered on the DiscreteTypes.
+    //Method to get the primary mutation rate.
     public static int getPrMutRate() {
         return (Integer)prMutRateBut.getValue();
     }
     
+    //Method to get the secondary mutation rate.
     public static int getSeMutRate() {
         return (Integer)seMutRateBut.getValue();
     }
     
+    //Method to get the mutation fitness threshold.
     public static int getFitThreshold() {
         return (Integer)fitnessThreshold.getValue();
     }
     
-    //Method to get the tournament size entered on the DiscreteTypes.
+    //Method to get the chosen tournament size.
     public static int getTourneySize() {
         return (Integer)tourneySizeSp.getValue();
     }
     
-    //Method to get the ranking method entered on the DiscreteTypes.
+    //Method to get the ranking method chosen.
     public static RankingMethod getRankButState() {
         RankingMethod rank = null;
         if(rouletteRankingBut.isSelected()) {
@@ -656,7 +653,7 @@ public class DiscreteTypes extends javax.swing.JFrame {
         return rank;
     }
     
-    //Method to get the optimisation method entered on the DiscreteTypes.
+    //Method to get the optimisation method chosen.
     public static Optimisation getOptimization() {
         Optimisation optimisation = null;
         if(maximiseBut.isSelected()) {
@@ -667,40 +664,42 @@ public class DiscreteTypes extends javax.swing.JFrame {
         return optimisation;
     }
       
-    //Method to get the dynamic mutation button's state.
+    //Method to get the "dynamic mutation" option's state.
     public static boolean isDynamicMutationSelected() {
         return dynamicMutBut.isSelected();
     }
     
-    //Method to get the chromosome information print button's state.
+    //Method to get the "show chromosome information" option's state.
     public static boolean isChromPrinButSelected() {
         return chromPrinBut.isSelected();
     }
     
-    //Method to get the evaluation information print button's state.
-    public static boolean isEvalPrinButSelected() {
+    //Method to get the "show population information" option's state.
+    public static boolean isPopPrinButSelected() {
         return popPrinBut.isSelected();
     }
     
-    //Method to get the evolution information print button's state.
+    //Method to get the "show evolution information" option's state.
     public static boolean isEvolPrinButSelected() {
         return crossPrinBut.isSelected();
     }
     
-    //Method to get the ranking information print button's state.
+    //Method to get the "show ranking information" option's state.
     public static boolean isRankPrinButSelected() {
         return rankPrinBut.isSelected();
     }
     
-    //Method to get the mutation information print button's state.
+    //Method to get the "show mutation information" option's state.
     public static boolean isMutPrinButSelected() {
         return mutPrinBut.isSelected();
     }
     
+    //Method to check if the "run until" option is selected.
     public static boolean isRunUntilButSelected() {
         return runUntilBut.isSelected();
     }
     
+    //Method to get the "run until" threshold fitness value input by the user.
     public static int getRunUntilThresh() {
         return (Integer)runUntilThreshold.getValue(); 
     }
@@ -713,13 +712,11 @@ public class DiscreteTypes extends javax.swing.JFrame {
         
     //Method that executes when the clear button is pressed.
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        //Clears the output window of all text.
         outputWindow.setText("");
     }//GEN-LAST:event_clearButtonActionPerformed
 
     //Method that executes when the primary mutation rate slider is moved.
     private void prMutRateButStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_prMutRateButStateChanged
-        //Updates the text on the slider label
         prmrLab.setText(prMutRateBut.getValue() + "%");
     }//GEN-LAST:event_prMutRateButStateChanged
 
@@ -728,34 +725,39 @@ public class DiscreteTypes extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitButActionPerformed
 
+    //Method that executes when the main menu option is clicked.
     private void mainMenuButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mainMenuButActionPerformed
         this.setVisible(false);
         menu.setVisible(true);
     }//GEN-LAST:event_mainMenuButActionPerformed
 
+    //Method that executes when the "tournament ranking" option is selected.
     private void tournamentRankingButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tournamentRankingButActionPerformed
+        //Creating the tournament dialog.
         tourneySizeDialog.setLocationRelativeTo(null);
         tourneySizeDialog.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna_helix.png")).getImage()); 
         tourneySizeDialog.setVisible(true); 
     }//GEN-LAST:event_tournamentRankingButActionPerformed
 
-    //Method that executes when the minimise radio button is selected.
+    //Method that executes when the "minimise function" option is selected.
     private void minimiseButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimiseButActionPerformed
-        //Disables the roulette ranking button and selects tournament ranking.
+        //Disabling incompatible options.
         rouletteRankingBut.setEnabled(false);
         if(!tournamentRankingBut.isSelected()) {
+            //Creating the tournament dialog.
             tourneySizeDialog.setLocationRelativeTo(null);
             tourneySizeDialog.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna_helix.png")).getImage()); 
             tourneySizeDialog.setVisible(true); 
         }
+        //Enabling/selecting the only valid options.
         rankButs.clearSelection();
         tournamentRankingBut.setSelected(true);
         tourneySizeSp.setEnabled(true);
     }//GEN-LAST:event_minimiseButActionPerformed
 
-     //Method that executes when the maximise radio button is selected.
+     //Method that executes when the "maximise function" option is selected.
     private void maximiseButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maximiseButActionPerformed
-        //Enables the roulette ranking button.
+        //Re-enabling a previously incompativle option.
         rouletteRankingBut.setEnabled(true);
     }//GEN-LAST:event_maximiseButActionPerformed
 
@@ -766,7 +768,6 @@ public class DiscreteTypes extends javax.swing.JFrame {
     
     //Method that executes when the primary mutation rate slider is moved.
     private void seMutRateButStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_seMutRateButStateChanged
-        //Updates the text on the slider label
         semrLab.setText(seMutRateBut.getValue() + "%");
     }//GEN-LAST:event_seMutRateButStateChanged
 
@@ -775,33 +776,36 @@ public class DiscreteTypes extends javax.swing.JFrame {
         mutationDialog.setVisible(false);
     }//GEN-LAST:event_mutationOkButActionPerformed
 
+    //Method that executes when the "dynamic mutation" option is selected.
     private void dynamicMutButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dynamicMutButActionPerformed
+        //Creating the mutation dialog.
         mutationDialog.setLocationRelativeTo(null);
         mutationDialog.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna.png")).getImage()); 
         mutationDialog.setVisible(true);
     }//GEN-LAST:event_dynamicMutButActionPerformed
 
+    //Method that executes when the "run until threshold fitness" option is selected.
     private void runUntilButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runUntilButActionPerformed
         if(runUntilBut.isSelected()) {
+            //Disabling incompatible options.
             numItsSp.setEnabled(false);
             itLabel.setEnabled(false);
+            //Creating the run until dialog.
             runUntilDialog.setLocationRelativeTo(null);
             runUntilDialog.setIconImage(new ImageIcon(getClass().getResource("/Resources/dna.png")).getImage()); 
             runUntilDialog.setVisible(true); 
         } else if(!runUntilBut.isSelected()) {
+            //Re-enabling incompatible options.
             numItsSp.setEnabled(true);
             itLabel.setEnabled(true);
         }
         
     }//GEN-LAST:event_runUntilButActionPerformed
 
+    //Method that executes when the OK button on the "run until" dialog is clicked.
     private void runUntilOKButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runUntilOKButActionPerformed
         runUntilDialog.setVisible(false);
     }//GEN-LAST:event_runUntilOKButActionPerformed
-
-    private void popPrinButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popPrinButActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_popPrinButActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel chromLabel;
